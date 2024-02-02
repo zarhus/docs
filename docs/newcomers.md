@@ -16,7 +16,7 @@ Linux and Yocto Project development.
 
 ## Zarhus Contribution
 
-All code review and all issues related to Zarhus are resolved on [GitHub](gh).
+All code review and all issues related to Zarhus are resolved on [GitHub][gh].
 An account there is necessary to contribute and report issues. All Zarhus
 repositories can be found [here][repo].
 
