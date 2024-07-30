@@ -66,4 +66,5 @@ nav:
       - 'New? Start here': newcomers.md
   - 'Guides':
     - 'Managing packages': guides/managing-packages.md
+    - 'Managing layers': guides/managing-layers.md
   - 'FAQ': faq.md
