@@ -64,6 +64,8 @@ nav:
   - 'Intro':
       - 'About Zarhus': index.md
       - 'New? Start here': newcomers.md
+  - 'Base OS':
+    - 'Building': base-os/building.md
   - 'Guides':
     - 'Managing packages': guides/managing-packages.md
     - 'Managing layers': guides/managing-layers.md
