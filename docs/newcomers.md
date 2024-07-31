@@ -14,6 +14,12 @@ Linux and Yocto Project development.
 [Y2]: https://docs.yoctoproject.org/2.0/yocto-project-qs/yocto-project-qs.html
 [Y3]: https://3mdeb.com/training/
 
+## Zarhus OS
+
+After getting familiarized with Yocto Project, you can continue exploration with
+building and running secure and adaptive Zarhus OS. Checkout [Getting
+started](./getting-started/building.md) page for guides!
+
 ## Zarhus Contribution
 
 All code review and all issues related to Zarhus are resolved on [GitHub][gh].
