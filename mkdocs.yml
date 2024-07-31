@@ -64,10 +64,10 @@ nav:
   - 'Intro':
       - 'About Zarhus': index.md
       - 'New? Start here': newcomers.md
-  - 'Base OS':
-    - 'Building': base-os/building.md
-    - 'Flashing': base-os/flashing.md
-    - 'Verification': base-os/verification.md
+  - 'Getting started':
+    - 'Building': getting-started/building.md
+    - 'Flashing': getting-started/flashing.md
+    - 'Verification': getting-started/verification.md
   - 'Supported targets':
     - 'Targets': supported-targets/targets.md
     - 'Radxa':

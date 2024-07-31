@@ -58,7 +58,7 @@ List of hardware elements used in the workflow:
 The Zarhus OS image from release `0.1` is being used during the workflow steps
 presented below. The image can be built from
 [here](https://github.com/zarhus/meta-zarhus/tree/v0.1). Check out the [building
-guide](../base-os/building.md) for details about Zarhus OS building process.
+guide](../getting-started/building.md) for details about Zarhus OS building process.
 
 A Rockchip-specific tool, `rkdeveloptool`, will be used during the flashing
 step. The source code from which the tool will be built can be found 
@@ -117,7 +117,7 @@ rkdeveloptool -v
 ### Preparing Zarhus OS image
 
 Build the Zarhus OS image version `0.1` according to the [building
-guide](../base-os/building.md).
+guide](../getting-started/building.md).
 
 After the image has been built - locate and copy the imge to a known location:
 
