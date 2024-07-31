@@ -68,6 +68,10 @@ nav:
     - 'Building': base-os/building.md
     - 'Flashing': base-os/flashing.md
     - 'Verification': base-os/verification.md
+  - 'Supported targets':
+    - 'Targets': supported-targets/targets.md
+    - 'Radxa':
+      - 'Radxa CM3': supported-targets/radxa-cm3.md
   - 'Guides':
     - 'Managing packages': guides/managing-packages.md
     - 'Managing layers': guides/managing-layers.md
