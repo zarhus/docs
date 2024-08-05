@@ -81,14 +81,14 @@ need. Then add those lines to `kas/common.yml` file:
 
 ```yml
 meta-hdl:
-	url: https://github.com/nathanrossi/meta-hdl
-	refspec: fa82506e0964bfa36519ecaea13c6397e25c81ef
+    url: https://github.com/nathanrossi/meta-hdl
+    refspec: fa82506e0964bfa36519ecaea13c6397e25c81ef
 ```
 
 `url` is a link to clone `git` repository and `refspec` is a `git` revision.
 When choosing which one to use it is best to check if the repository has
 branches named as Yocto releases. If it is true, we should take the top commit
-from the one matching [the Yocto relase used in
+from the one matching [the Yocto release used in
 `meta-zarhus`.](https://github.com/zarhus/meta-zarhus/blob/4c51e773af9bef9f5fa4ac2e636eb9e3860c168d/conf/layer.conf#L20)
 If the repository does not provide such branches, we should use the top commit
 from the `master` branch.

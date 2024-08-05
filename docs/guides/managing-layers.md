@@ -12,6 +12,7 @@ to experiment or to build your custom Zarhus OS image.
 ## Currently used layers
 
 Currently, we use following custom layers:
+
 * `meta-zarhus` - common across all platforms;
 * `meta-bsp-rockchip` - contains metadata for Rockchip target(s);
 
@@ -46,7 +47,7 @@ Currently, we use following custom layers:
 
 Most of the active and useful Yocto layers are registered in the
 [OpenEmbedded Layer Index](https://layers.openembedded.org/layerindex/branch/master/layers/)
-and - this should be the first place to look for layers to use.
+and it should be the first place to look for layers to use.
 
 Layers are added by inserting an entry to the `kas/common.yml` file. For
 example, this is how the `meta-openembedded` could be added:

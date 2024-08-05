@@ -39,7 +39,7 @@ under your host Linux distribution.
 
 ## eMMC Flashing
 
-This guide presents the workflow of flashing a Zarhsu OS image on Radxa CM3 eMMC
+This guide presents the workflow of flashing a Zarhus OS image on Radxa CM3 eMMC
 memory.
 
 ### Hardware overview
@@ -119,7 +119,7 @@ rkdeveloptool -v
 Build the Zarhus OS image version `0.1` according to the [building
 guide](../getting-started/building.md).
 
-After the image has been built - locate and copy the imge to a known location:
+After the image has been built - locate and copy the image to a known location:
 
 
 ```bash
@@ -185,7 +185,7 @@ lsusb | grep '350a'
 Bus 003 Device 007: ID 2207:350a Fuzhou Rockchip Electronics Company
 ```
 
-Confirm, that the platform is in maskrom state (repeate above steps if not):
+Confirm, that the platform is in maskrom state (repeat above steps if not):
 
 ```bash
 rkdeveloptool ld

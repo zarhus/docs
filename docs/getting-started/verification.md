@@ -35,7 +35,7 @@ system to prove the functionality of Zarhus OS.
 
 ### Booting platform
 
-This is the basic functionality of all OS'es. To verify this you need to connect
+This is the basic functionality of all OSes. To verify this, you need to connect
 to the serial port of your target and start communication with your host device,
 check [your target page](../supported-targets/targets.md) on how to do so.
 

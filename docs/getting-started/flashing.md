@@ -19,7 +19,7 @@ This section demonstrates how to flash a Zarhus OS image on the SD card.
     sudo apt install bmap-tools
     ```
 
-* Zarhus Os image built according to [build guide](./building.md).
+* Zarhus OS image built according to [build guide](./building.md).
 
 !!! note
 
@@ -43,9 +43,9 @@ Device     Boot  Start    End Sectors  Size Id Type
 
     In this case the device name is `/dev/sdx` **but be aware, in next steps
     replace `/dev/sdx` with the right device name on your platform or else you
-    can damage your system!.**
+    can damage your system!**
 
-From the directory you ran your image build run command:
+From the directory you ran your image build, run command:
 
 ```shell
 $ cd build/tmp/deploy/images/MACHINE_NAME
@@ -70,7 +70,7 @@ bmaptool: info: synchronizing '/dev/sdx'
 bmaptool: info: copying time: 11.1s, copying speed 15.1 MiB/sec
 ```
 
-# Verification
+## Verification
 
 After the SD card has been flashed with your image, the partitions (at least
 `rootfs` partition) should  be mountable. So, you can mount a partition and
