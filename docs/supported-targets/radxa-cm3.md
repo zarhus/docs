@@ -21,7 +21,7 @@ that with [PuTTY](https://www.putty.org/).
 
 There are only two parameters that depend not only on hardware but on software
 as well: baudrate and serial port number. In case of Radxa CM3 port - Zarhus OS
-gives access to console via serial port 2 with boudrate `1.5 Mbps`, so you can
+gives access to console via serial port 2 with baudrate `1.5 Mbps`, so you can
 connect to the console by connecting the UART adapter to [pins `6`, `8` and
 `10`](https://wiki.radxa.com/Rock3/CM3/IO/GPIO) of
 [`CON1`](https://wiki.radxa.com/Rock3/CM3/IO/pinout) on Radxa CM3 IO board:
@@ -46,9 +46,9 @@ memory.
 
 List of hardware elements used in the workflow:
 
-- **Target**: [Radxa Compute Module 3][cm3] with [Radxa CM3 IO Board][iob]
-- **Power supply**: 12V/2A
-- **Cable**: Male USB A to male USB Micro B
+* **Target**: [Radxa Compute Module 3][cm3] with [Radxa CM3 IO Board][iob]
+* **Power supply**: 12V/2A
+* **Cable**: Male USB A to male USB Micro B
 
 [cm3]: https://wiki.radxa.com/Rock3/CM/CM3
 [iob]: https://wiki.radxa.com/Rock3/CM3/IO

@@ -10,7 +10,7 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
 ## Prerequisites
 
 * Linux PC (tested on `Ubuntu 20.04 LTS`)
-* [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) installed
+* [docker](https://docs.docker.com/engine/install/ubuntu/) installed
 * [kas-container
   3.0.2](https://raw.githubusercontent.com/siemens/kas/3.0.2/kas-container)
   script downloaded and available in
@@ -18,9 +18,16 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
 
     ```bash
     mkdir ~/.local/bin
-    wget -O ~/.local/bin/kas-container https://raw.githubusercontent.com/siemens/kas/2.6.3/kas-container
+    wget -O ~/.local/bin/kas-container https://raw.githubusercontent.com/siemens/kas/3.0.2/kas-container
     chmod +x ~/.local/bin/kas-container
     ```
+
+!!! note
+
+    You may need to add `~/.local/bin` into your
+    [PATH](https://en.wikipedia.org/wiki/PATH_(variable)). You can do so for
+    example by adding `export PATH=$PATH:~/.local/bin` to your `.bashrc` and
+    `source` it.
 
 * `meta-zarhus` repository cloned:
 
@@ -30,7 +37,8 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
     git clone https://github.com/zarhus/meta-zarhus.git
     ```
 
-* [`bmaptool`](https://source.tizen.org/documentation/reference/bmaptool) installed:
+* [`bmaptool`](https://docs.yoctoproject.org/dev-manual/bmaptool.html)
+  installed:
 
     ```bash
     sudo apt install bmap-tools
@@ -38,9 +46,9 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
 
 !!! note
 
-    You can also use `bmap-tools` [from
-    GitHub](https://github.com/intel/bmap-tools) if it is not available in your
-    distro.
+    You can also use `bmaptool` [from
+    GitHub](https://github.com/yoctoproject/bmaptool) if it is not available in
+    your distro.
 
 ## Build
 
@@ -76,6 +84,6 @@ After the build has finished - feel free to explore
     Replace `MACHINE_NAME` with the name of the machine you have built your
     image for.
 
-You should find an image in formate `.rootfs.wic.gz` and a binary map for the
-image in format `.rootfs.wic.bmap`. These files will be needed for
-[flashing process](./flashing.md).
+You should find an image with filename ending with `.rootfs.wic.gz` and a binary
+map for the image in format with filename ending with `.rootfs.wic.bmap`. These
+files will be needed for [flashing process](./flashing.md).

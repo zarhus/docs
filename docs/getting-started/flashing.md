@@ -12,7 +12,7 @@ This section demonstrates how to flash a Zarhus OS image on the SD card.
 ### Prerequisites
 
 * Linux PC (tested on `Ubuntu 20.04 LTS`);
-* [bmaptool](https://source.tizen.org/documentation/reference/bmaptool)
+* [bmaptool](https://docs.yoctoproject.org/dev-manual/bmaptool.html)
   installed:
 
     ```bash
@@ -23,20 +23,22 @@ This section demonstrates how to flash a Zarhus OS image on the SD card.
 
 !!! note
 
-    You can also use `bmap-tools` [from
-    GitHub](https://github.com/intel/bmap-tools) if it is not available in your
-    distro.
+    You can also use `bmaptool` [from
+    GitHub](https://github.com/yoctoproject/bmaptool) if it is not available in
+    your distro.
 
 ### Flashing
 
 Find out your device name:
 
 ```shell
-$ fdisk -l
+$ lsblk
 (...)
-Device     Boot  Start    End Sectors  Size Id Type
-/dev/sdx1  *      8192 131433  123242 60,2M  c W95 FAT32 (LBA)
-/dev/sdx2       139264 186667   47404 23,2M 83 Linux
+sdx                                             8:16   1  14.8G  0 disk
+├─sdx1                                          8:17   1   3.5M  0 part
+├─sdx2                                          8:18   1   256K  0 part
+├─sdx3                                          8:19   1   192K  0 part
+(...)
 ```
 
 !!! warning
@@ -50,7 +52,7 @@ From the directory you ran your image build, run command:
 ```shell
 $ cd build/tmp/deploy/images/MACHINE_NAME
 $ sudo umount /dev/sdx*
-$ sudo bmaptool copy --bmap IMAGE_NAME-IMAGE_TYPE-MACHINE_NAME.rootfs.wic.bmap IMAGE_NAME-IMAGE_TYPE-MACHINE_NAME.rootfs.wic.gz /dev/sdx
+$ sudo bmaptool copy IMAGE_NAME-IMAGE_TYPE-MACHINE_NAME.rootfs.wic.gz /dev/sdx
 ```
 
 !!! note
@@ -73,7 +75,7 @@ bmaptool: info: copying time: 11.1s, copying speed 15.1 MiB/sec
 ## Verification
 
 After the SD card has been flashed with your image, the partitions (at least
-`rootfs` partition) should  be mountable. So, you can mount a partition and
+`rootfs` partition) should be mountable. So, you can mount a partition and
 explore the Zarhus OS without even booting it! Here is example block storage
 layout after flashing [Zarhus Rockchip OS
 image](https://github.com/zarhus/meta-zarhus-bsp-rockchip/blob/main/wic/sdimage-rockchip.wks):

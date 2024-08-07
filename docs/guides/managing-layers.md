@@ -66,7 +66,7 @@ example, this is how the `meta-openembedded` could be added:
 * the `url` points to the repository location;
 * the `refspec` is a SHA1 of git commit we want to use;
 * the `layers` section is optional:
-    - if it does not exists, the `kas` assumes that the root directory is a layer
+    - if it does not exist, the `kas` assumes that the root directory is a layer
     itself;
     - if it exists, we can choose which layers from given repository should be
     enabled - in this example we enable `oe`, `networking`, `python` and

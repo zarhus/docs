@@ -26,7 +26,7 @@ Hardware prerequisites:
 * Serial communication devices, refer to [your target
   page](../supported-targets/targets.md) and check how to establish serial
   communication with your target;
-* A cable for ethernet connection with your target.
+* A cable for Ethernet connection with your target.
 
 ## Verification
 
@@ -171,7 +171,7 @@ mmcblk2boot1 179:16   0    16M  1 disk
 
 #### Ethernet
 
-After connecting the ethernet cable to the RJ-45 port on a target platform,
+After connecting the Ethernet cable to the RJ-45 port on a target platform,
 you should automatically gain access to the network, meaning that the device
 should get an IP address. Depending on your target platform, the IP address will
 vary because of the DHCP gateway.
