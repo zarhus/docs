@@ -16,7 +16,7 @@ Additional resources for the boards:
 ## Serial port access (Zarhus OS debug console)
 
 Numerous types of software can be used to communicate via serial ports. On a
-host machine with linux-based OS it can be `minicom`, Windows users can access
+host machine with Linux-based OS it can be `minicom`, Windows users can access
 that with [PuTTY](https://www.putty.org/).
 
 There are only two parameters that depend not only on hardware but on software
@@ -72,8 +72,16 @@ workflow. Follow the below steps to complete installation:
 Install dependencies:
 
 ```bash
-sudo apt-get install libudev-dev libusb-1.0-0-dev dh-autoreconf
+sudo dnf install systemd-devel libusb1-devel autoconf libusb1 pkgconf-pkg-config
+sudo dnf group install "C Development Tools and Libraries" "Development Tools"
 ```
+!!! note
+
+    On Ubuntu, you should have installed: `libudev-dev`, `libusb-1.0-0-dev`,
+    `dh-autoreconf`, `pkg-config`, `lib-usb-1.0`, `build-essential`, `git`, and
+    `wget`. The group `C Development Tools and Libraries" "Development Tools`
+    installed above is a replacement for Ubuntu `build-essential` package, and
+    `libudev` files are a part of `systemd-devel`.
 
 Fetch the tool from its repository:
 

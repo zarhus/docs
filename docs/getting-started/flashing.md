@@ -11,7 +11,7 @@ This section demonstrates how to flash a Zarhus OS image on the SD card.
 
 ### Prerequisites
 
-* Linux PC (tested on `Ubuntu 20.04 LTS`);
+* Linux PC (tested on `Fedora 40`);
 * [bmaptool](https://docs.yoctoproject.org/dev-manual/bmaptool.html)
   installed:
 

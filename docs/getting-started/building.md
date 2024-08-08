@@ -9,8 +9,8 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
 
 ## Prerequisites
 
-* Linux PC (tested on `Ubuntu 20.04 LTS`)
-* [docker](https://docs.docker.com/engine/install/ubuntu/) installed
+* Linux PC (tested on `Fedora 40`)
+* [docker](https://docs.docker.com/engine/install/fedora/) installed
 * [kas-container
   3.0.2](https://raw.githubusercontent.com/siemens/kas/3.0.2/kas-container)
   script downloaded and available in
@@ -41,7 +41,7 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
   installed:
 
     ```bash
-    sudo apt install bmap-tools
+    sudo dnf install bmap-tools
     ```
 
 !!! note
