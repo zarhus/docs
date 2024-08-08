@@ -33,15 +33,16 @@ extra:
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
+  - admonition
   - footnotes
   - pymdownx.highlight
-  - pymdownx.superfences
   - pymdownx.keys
+  - pymdownx.superfences
   - attr_list
   - meta
   - md_in_html
   - toc:
-      toc_depth: 2
+      toc_depth: 3
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.superfences:
@@ -63,4 +64,15 @@ nav:
   - 'Intro':
       - 'About Zarhus': index.md
       - 'New? Start here': newcomers.md
+  - 'Getting started':
+    - 'Building': getting-started/building.md
+    - 'Flashing': getting-started/flashing.md
+    - 'Verification': getting-started/verification.md
+  - 'Supported targets':
+    - 'Targets': supported-targets/targets.md
+    - 'Radxa':
+      - 'Radxa CM3': supported-targets/radxa-cm3.md
+  - 'Guides':
+    - 'Managing packages': guides/managing-packages.md
+    - 'Managing layers': guides/managing-layers.md
   - 'FAQ': faq.md
