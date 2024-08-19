@@ -52,15 +52,15 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
 
 ## Build
 
+Depending on the features you want to have in your build, pass the desired
+`.yml` files via command line. You can read more on that in
+[kas documentation](https://kas.readthedocs.io/en/latest/userguide/project-configuration.html#including-configuration-files-via-the-command-line).
+
 From `yocto` directory run:
 
 ```shell
-$ SHELL=/bin/bash kas-container build meta-zarhus/kas-IMAGE_TYPE.yml
+SHELL=/bin/bash kas-container build meta-zarhus/kas/common.yml:meta-zarhus/kas/rockchip.yml
 ```
-
-!!! note
-
-    Replace `IMAGE_TYPE` with either `debug` or `prod`.
 
 Image build takes time, so be patient and after the build finishes you should see
 something similar to this (the exact tasks numbers may differ):
