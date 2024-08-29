@@ -75,4 +75,6 @@ nav:
   - 'Guides':
     - 'Managing packages': guides/managing-packages.md
     - 'Managing layers': guides/managing-layers.md
+  - 'Development Process':
+      - 'Standard Release Process': development-process/standard-release-process.md
   - 'FAQ': faq.md
