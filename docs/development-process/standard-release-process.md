@@ -56,3 +56,19 @@ MAJOR.MINOR.PATCH-rc.RC_ID
 ```
 
 where the `RC_ID` starts with 1.
+
+## Upstream release
+
+In cases where upstream release needs to use different resources
+(e.g. repositories) you should have 2 branches `main` and `develop`.
+All development should be done on `develop` branch which can contain links
+to e.g. private downstream repositories.
+During release, you should merge all changes into `main` and resolve merge
+conflicts. Any conflicts during merge should be triple checked as it is likely
+that URL's pointing to upstream changed.
+After merging `develop` into `main` create temporary branch from `main`,
+find all private downstream links and then replace them with upstream ones.
+Make sure that resources are available upstream and image can be built after
+changes. If yes then merge those changes into `main` and then follow steps
+described in [Process steps](#process-steps). After release is ready you can
+then push `main` branch and newly created tag to upstream.
