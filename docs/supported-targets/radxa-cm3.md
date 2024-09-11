@@ -61,7 +61,7 @@ presented below. The image can be built from
 guide](../getting-started/building.md) for details about Zarhus OS building process.
 
 A Rockchip-specific tool, `rkdeveloptool`, will be used during the flashing
-step. The source code from which the tool will be built can be found 
+step. The source code from which the tool will be built can be found
 [here](https://github.com/radxa/rkdeveloptool).
 
 ### Preparing tools
@@ -75,6 +75,7 @@ Install dependencies:
 sudo dnf install systemd-devel libusb1-devel autoconf libusb1 pkgconf-pkg-config
 sudo dnf group install "C Development Tools and Libraries" "Development Tools"
 ```
+
 !!! note
 
     On Ubuntu, you should have installed: `libudev-dev`, `libusb-1.0-0-dev`,
@@ -129,7 +130,6 @@ guide](../getting-started/building.md).
 
 After the image has been built - locate and copy the image to a known location:
 
-
 ```bash
 cp build/tmp/deploy/images/zarhus-machine-cm3/zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic.gz ./
 ```
@@ -153,7 +153,7 @@ gunzip zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic.gz
 Now you should have decompressed image file in your directory:
 
 ```bash
-file ./zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic 
+file ./zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic
 zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic: DOS/MBR boot sector; partition 1 : ID=0xee, start-CHS (0x0,0,2), end-CHS (0x3ff,255,63), startsector 1, 687763 sectors, extended partition table (last)
 ```
 
@@ -161,7 +161,6 @@ zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic: DOS/MBR boot sector; 
 
     Replace `IMAGE_VER` with either `debug` or `prod` depending on the `.yml`
     file you used in previous step.
-
 
 ### Flashing
 

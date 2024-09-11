@@ -5,7 +5,7 @@ site_url: https://docs.zarhus.com
 repo_url: https://github.com/zarhus/docs
 theme:
   name: material
-  #custom_dir: overrides
+  # custom_dir: overrides
   favicon: images/favicon.png
   logo: images/zarhus-logo-white.png
   features:
@@ -24,12 +24,12 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/zarhus
-    #- icon: fontawesome/brands/mastodon
-    #  link: https://fosstodon.org/@TBD
-    #- icon: fontawesome/brands/twitter
-    #  link: https://twitter.com/TBD
-    #- icon: fontawesome/brands/reddit
-    #  link: https://www.reddit.com/r/TBD
+    # - icon: fontawesome/brands/mastodon
+    #   link: https://fosstodon.org/@TBD
+    # - icon: fontawesome/brands/twitter
+    #   link: https://twitter.com/TBD
+    # - icon: fontawesome/brands/reddit
+    #   link: https://www.reddit.com/r/TBD
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
@@ -65,14 +65,14 @@ nav:
       - 'About Zarhus': index.md
       - 'New? Start here': newcomers.md
   - 'Getting started':
-    - 'Building': getting-started/building.md
-    - 'Flashing': getting-started/flashing.md
-    - 'Verification': getting-started/verification.md
+      - 'Building': getting-started/building.md
+      - 'Flashing': getting-started/flashing.md
+      - 'Verification': getting-started/verification.md
   - 'Supported targets':
-    - 'Targets': supported-targets/targets.md
-    - 'Radxa':
-      - 'Radxa CM3': supported-targets/radxa-cm3.md
+      - 'Targets': supported-targets/targets.md
+      - 'Radxa':
+          - 'Radxa CM3': supported-targets/radxa-cm3.md
   - 'Guides':
-    - 'Managing packages': guides/managing-packages.md
-    - 'Managing layers': guides/managing-layers.md
+      - 'Managing packages': guides/managing-packages.md
+      - 'Managing layers': guides/managing-layers.md
   - 'FAQ': faq.md

@@ -31,7 +31,7 @@ Currently, we use following custom layers:
       +----------+----------------+   +---------+-----------------+
       |                           |   |                           |
       |       BSP layers          |   |      Software layers      |
-      |   (hardware depended)     |   |   (hardware independed)   |
+      |   (hardware dependent)    |   |   (hardware independent)  |
       |                           |   |                           |
       | +------------------------+|   | +------------+            |
       | |meta-zarhus-bsp-rockchip||   | | meta-zarhus|            |
