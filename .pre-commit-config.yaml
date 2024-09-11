@@ -3,6 +3,8 @@ default_stages: [pre-commit]
 
 default_install_hook_types: [pre-commit, commit-msg]
 
+exclude: (^vendor/|.*\.pdf|.*\.svg$)
+
 ci:
   autoupdate_commit_msg: 'pre-commit: autoupdate hooks'
   autofix_prs: false
@@ -46,3 +48,14 @@ repos:
     hooks:
       - id: markdownlint
       - id: markdownlint-fix
+
+  - repo: https://github.com/lycheeverse/lychee
+    rev: v0.15.1
+    hooks:
+      - id: lychee-docker
+        # Optionally include additional CLI arguments
+        args: [
+          "--no-progress", "--exclude", "file://", "--exclude", "0.0.0.0",
+          "--exclude", ".git", "--include-verbatim", "--timeout", "10",
+          "--exclude-all-private", "-m", "10"
+        ]
