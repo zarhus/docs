@@ -17,39 +17,39 @@ USB directory layout:
 ```text
 .
 ├── SBO003.001
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO004.001
-│   └── hello.efi
-├── SBO006.001
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO008.001
-│   ├── db.cer
+│   ├── cert.der
+│   └── hello.efi
 ├── SBO009.001
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO010.001
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO010.002
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO010.003
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO010.004
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO010.005
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 ├── SBO010.006
-│   ├── db.cer
+│   ├── cert.der
 │   └── hello.efi
 └── SBO011.001
-    ├── db.cer
+    ├── cert.der
     └── hello.efi
+12 directories, 22 files
 ```
 
 ## Tests
@@ -107,7 +107,7 @@ key.
 **Steps**
 
 1. [Enter BIOS setup menu](./secure-boot-bios.md#enter-bios-setup-menu)
-1. [Add SBO003.001/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO003.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO003.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -201,7 +201,7 @@ incorrect format
 
 **Steps**
 
-1. [Add SBO008.001/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO008.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 
 **Expected result**
 
@@ -222,7 +222,7 @@ executed.
 
 **Steps**
 
-1. [Add SBO009.001/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO009.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO009.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -236,6 +236,8 @@ Hello, world!
 
 ### SBO010.001 Check support for rsa2k signed certificates
 
+<!-- we can probably skip this one as it's identical to SBO003.001 -->
+
 **Description**
 
 This test verifies that a Secure Boot supports RSA2048 signed certificate and
@@ -247,7 +249,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.001/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO010.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -270,7 +272,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.002/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.002/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO010.002/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -293,7 +295,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.003/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.003/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO010.003/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -316,7 +318,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.004/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.004/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO010.004/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -339,7 +341,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.005/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.005/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO010.005/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -362,7 +364,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.006/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.006/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO010.006/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -384,7 +386,7 @@ This test verifies that an expired certificate cannot be used to boot image
 
 **Steps**
 
-1. [Add SBO011.001/db.cer](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO011.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot DUT
 1. [Boot SBO011.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
