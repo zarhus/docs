@@ -56,29 +56,26 @@ mkdocs.yml)
 
 There should be no TBD or TODO visible on the website.
 
-<!--
 ### pre-commit hooks
 
 - [Install pre-commit](https://pre-commit.com/index.html#install), if you
   followed [local build](#local-build) procedure `pre-commit` should be
   installed
 
-- [Install go](https://go.dev/doc/install)
-
 - Install hooks into repo:
 
-```shell
-pre-commit install
-```
+  ```shell
+  pre-commit install
+  ```
 
 - Enjoy automatic checks on each `git commit` action!
 
 - (Optional) Run hooks on all files (for example, when adding new hooks or
   configuring existing ones):
 
-```shell
-pre-commit run --all-files
-```
+  ```shell
+  pre-commit run --all-files
+  ```
 
 #### To skip verification
 
@@ -88,7 +85,6 @@ use:
 ```shell
 git commit --no-verify
 ```
--->
 
 ### Embedding videos
 
