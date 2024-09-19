@@ -62,8 +62,6 @@ There should be no TBD or TODO visible on the website.
   followed [local build](#local-build) procedure `pre-commit` should be
   installed
 
-- [Install go](https://go.dev/doc/install)
-
 - Install hooks into repo:
 
   ```shell
