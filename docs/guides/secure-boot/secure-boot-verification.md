@@ -9,13 +9,23 @@
     from known state
     -->
 * Attached USB drive prepared in [USB drive](#usb-drive) section
+    - If using QEMU `tests.img` can be attached directly e.g. via adding
+        `-drive if=ide,file=tests.img` argument to `qemu` command
+
+* Before starting tests please boot to OS on machine to be tested, mount
+    USB drive and run `add-boot-options.sh` script. It should add all `.efi`
+    files to boot options
 
 ### USB drive
+
+1. Run `generate-image.sh` script. It'll generate `tests.img` file
+1. Flash this file to USB drive
 
 USB directory layout:
 
 ```text
 .
+├── add-boot-options.sh
 ├── SBO003.001
 │   ├── cert.der
 │   └── hello.efi
@@ -46,10 +56,16 @@ USB directory layout:
 ├── SBO010.006
 │   ├── cert.der
 │   └── hello.efi
-└── SBO011.001
-    ├── cert.der
-    └── hello.efi
-12 directories, 22 files
+├── SBO011.001
+│   ├── cert.der
+│   └── hello.efi
+├── SBO013.001
+│   ├── hello.efi
+│   └── LockDown.efi
+└── SBO013.002
+    └── KEK.crt
+
+14 directories, 26 files
 ```
 
 ## Tests
@@ -102,12 +118,12 @@ key.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-
 **Steps**
 
 1. [Enter BIOS setup menu](./secure-boot-bios.md#enter-bios-setup-menu)
+1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 1. [Add SBO003.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO003.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -149,8 +165,6 @@ This test aims to verify, that the Reset Secure Boot Keys option is available
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-
 **Steps**
 
 1. [Enter Secure Boot menu](./secure-boot-bios.md#enter-secure-boot-menu)
@@ -176,7 +190,13 @@ This test verifies that the Reset Secure Boot Keys option works correctly.
 
 **Steps**
 
-1. Select `Reset Secure Boot Keys` options from previous test and accept
+1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. Save changes and reboot
+1. [Enter Secure Boot menu](./secure-boot-bios.md#enter-secure-boot-menu)
+1. If using Dasharo firmware then
+    [enter keys management menu](./secure-boot-bios.md#enter-advanced-secure-boot-keys-management-menu)
+1. Select `Reset Secure Boot Keys` and accept
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO003.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -197,10 +217,9 @@ incorrect format
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-
 **Steps**
 
+1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 1. [Add SBO008.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 
 **Expected result**
@@ -218,11 +237,12 @@ executed.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO009.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO009.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -245,11 +265,12 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO010.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -268,11 +289,12 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.002/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO010.002/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -291,11 +313,12 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.003/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO010.003/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -314,11 +337,12 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.004/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO010.004/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -337,11 +361,12 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.005/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO010.005/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -360,11 +385,12 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.006/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO010.006/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -382,11 +408,12 @@ This test verifies that an expired certificate cannot be used to boot image
 
 **Prerequisites**
 
-* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 
 **Steps**
 
 1. [Add SBO011.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and reboot DUT
 1. [Boot SBO011.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -415,8 +442,9 @@ BIOS. On Dasharo we can check PKCS7_GUID of KEK and DB (but not PK).
 
 **Steps**
 
-1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
+    - Disable factory key provisioning if using AMI BIOS
 1. Save changes and restart DUT
 1. Boot and log into OS
 1. Remove old Secure Boot keys
@@ -465,33 +493,7 @@ inside OS.
 
 **Steps**
 
-1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
-1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
-1. Save changes and restart DUT
 1. Boot and log into OS
-1. Remove old Secure Boot keys
-
-    ```shell
-    rm -rf /usr/share/secureboot
-    ```
-
-1. Generate new Secure Boot keys
-
-    ```shell
-    $ sbctl create-keys
-    Created Owner UUID 2a602183-aee8-4998-a313-25635405d554
-    Creating secure boot keys...✓
-    Secure boot keys created!
-    ```
-
-1. Enroll generated Secure Boot keys
-
-    ```shell
-    $ sbctl enroll-keys --yes-this-might-brick-my-machine
-    Enrolling keys to EFI variables...✓
-    Enrolled keys to the EFI variables!
-    ```
-
 1. Sign all components
 
     ```shell
@@ -540,8 +542,9 @@ format from the operating system while using sbctl.
 
 **Steps**
 
-1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
+    - Disable factory key provisioning if using AMI BIOS
 1. Save changes and restart DUT
 1. Boot and log into OS
 1. Remove old Secure Boot keys
@@ -588,18 +591,81 @@ couldn't sync keys
 
 **Description**
 
+This test verifies that the automatic certificate provisioning will install
+custom keys which will allow to boot signed `hello.efi` file
+
+<!--
+Fix description in Dasharo docs? There the test conclusion is 'which will make
+Ubuntu unbootable` which doesn't happen due to automatic certificate
+provisioning but due to erasing all secure boot keys
+-->
+
 **Prerequisites**
 
 **Steps**
 
+1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. Save changes and restart
+1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
+    - Disable factory key provisioning if using AMI BIOS
+1. Save changes and restart.
+1. [Boot SBO013.001/LockDown.efi file](./secure-boot-bios.md#boot-efi-file)
+1. Wait until DUT reboots automatically
+1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+1. Save changes and restart
+1. [Boot SBO013.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
+
 **Expected result**
+
+```text
+Hello, world!
+```
 
 ### SBO013.002 Check automatic certificate provisioning KEK certificate
 
 **Description**
 
+This test verifies that automatic certificate provisioning installed expected
+KEK certificate
+
 **Prerequisites**
+
+* [SBO013.001](#sbo013001-check-automatic-certificate-provisioning) succeeded
 
 **Steps**
 
+1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. Boot and log into OS
+1. Mount USB drive with tests if it wasn't mounted automatically
+1. Export currently enrolled certificate
+
+    ```shell
+    mokutil --kek > current_certificate.crt
+    ```
+
+1. Compare current KEK certificate with one that should be enrolled.
+    Replace `<usb/mount>` with path to where USB drive is mounted.
+
+    ```shell
+    diff <usb/mount>/SBO013.002/KEK.crt current_certificate.crt --color=always
+    ```
+
 **Expected result**
+
+No output or slight format differences e.g.
+
+```diff
+1c1,2
+< SHA1 Fingerprint=EA:EF:F4:8A:C2:38:CB:31:98:FD:45:81:6D:64:99:78:61:BB:B7:0C
+---
+> [key 1]
+> SHA1 Fingerprint: ea:ef:f4:8a:c2:38:cb:31:98:fd:45:81:6d:64:99:78:61:bb:b7:0c
+8c9
+<         Issuer: CN = KEK Certificate
+---
+>         Issuer: CN=KEK Certificate
+12c13
+<         Subject: CN = KEK Certificate
+---
+>         Subject: CN=KEK Certificate
+```
