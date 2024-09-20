@@ -141,29 +141,61 @@ create_iso() {
     IMAGELABEL="tests"
     IMAGEPATH="$TEMPDIR/$IMAGELABEL.img"
     local mounted=
+    local dev=
     mounted="/run/media/$(whoami)/$IMAGELABEL"
 
     dd if=/dev/zero of="$IMAGEPATH" bs=1M count=10 > /dev/null 2>&1
     error_check "Cannot create empty image file to store created certs and efi files"
-    mkfs.fat -F 12 "$IMAGEPATH" -n $IMAGELABEL > /dev/null 2>&1
-    error_check "Cannot assign label: $IMAGELABEL"
+    # Create GPT table and EFI partition
+    fdisk "$IMAGEPATH" << EOF
+    g
+    n
+    1
 
-    udisksctl loop-setup -f "$IMAGEPATH"
-    error_check "Cannot run udisksctl to create iso"
-    echo -n "Mounting $IMAGELABEL..."
-    while [ ! -d "$mounted" ]; do
-        echo -n "."
-        sleep 0.2
-    done
-    echo ""
-    trap "umount $mounted; cleanup" EXIT
 
-    # copy everything to the image (except for the image itself)
+    t
+    1
+    w
+EOF
+    error_check "fdisk failed"
+
+    dev=$(udisksctl loop-setup -f "$IMAGEPATH" | awk '{print substr($NF,1,length($NF)-1)}')
+    error_check "udisksctl failed to create loop device"
+    trap "udisksctl loop-delete -b $dev; cleanup" EXIT
+    echo "Creating fat partition on ${dev}p1"
+    sudo mkfs.fat -F 12 "${dev}p1" -n $IMAGELABEL > /dev/null 2>&1
+    error_check "Cannot create fat partition"
+    mounted=$(udisksctl mount -b "${dev}p1" | awk '{print $NF}')
+    error_check "Cannot mount ${dev}p1"
+    trap "umount $mounted; udisksctl loop-delete -b $dev; cleanup" EXIT
+
+    # create script that'll add all efi files to boot options
+    cat << EOF >> "$FILES/add-boot-options.sh"
+#!/bin/bash
+
+UUID=$(lsblk -no UUID "${dev}p1")
+PARTITION=\$(basename "\$(realpath "/dev/disk/by-uuid/\$UUID")")
+PARTITION_DEV=/dev/\$PARTITION
+DEV="/dev/\$(basename "\$(realpath /sys/class/block/\$PARTITION/..)")"
+TEMP_FILE=\$(mktemp -d)
+
+mount \$PARTITION_DEV \$TEMP_FILE
+cd \$TEMP_FILE
+find SBO0* -name "*.efi" -exec \\
+    efibootmgr --create --disk=\$DEV --label="{}" \\
+                --loader="\$(echo "{}" | sed 's|/|\\\\|g')" \;
+EOF
+
     cp -r "$FILES"/* "$mounted"
     error_check "Couldn't copy $FILES/ to $mounted"
+
     trap 'cleanup' EXIT
-    umount "$mounted"
-    error_check "Couldn't umount $mounted"
+    if ! umount "$mounted"; then
+        udisksctl loop-delete -b "$dev"
+        error_exit "Failed to umount $mounted"
+    fi
+    udisksctl loop-delete -b "$dev"
+    error_check "Couldn't delete loop device $dev"
 }
 
 create_test() {
@@ -175,6 +207,7 @@ create_test() {
 
     pushd "$TEST" >/dev/null || error_exit "Couldn't enter $TEST"
 
+    # call <create_key_function> [args...]
     "$@"
     error_check "$*: Couldn't create keys and certificate"
     if [ "$SIGN" = "y" ]; then
@@ -189,6 +222,48 @@ create_test() {
     # remove everything except "cert.der" and "hello.efi"
     find -maxdepth 1 -type f ! -name "cert.der" ! -name "hello.efi" -exec rm {} \;
     error_check "find error"
+
+    popd >/dev/null || error_exit "Couldn't popd"
+}
+
+create_privisioning_test() {
+    local TEST=$1
+    local COMMIT=b2c2716c20afa76575b431e0a4cfd126e6df766f
+    local DB_CRT_HASH=80aea212df9d1855e00251d80d1b384f9e7d7c48c4d6491f5a346dd52b3c2260 
+    local DB_KEY_HASH=da2bb57a51a7eb7f701c17d9f7e8ade7668fe204af5518e520580328f7e64231
+    mkdir "$TEST"
+    
+    pushd "$TEST" >/dev/null || error_exit "Couldn't enter $TEST"
+
+    wget https://raw.githubusercontent.com/Wind-River/meta-secure-core/$COMMIT/meta-signing-key/files/uefi_sb_keys/DB.crt
+    wget https://raw.githubusercontent.com/Wind-River/meta-secure-core/$COMMIT/meta-signing-key/files/uefi_sb_keys/DB.key
+    if ! diff <(sha256sum DB.crt) <(echo "$DB_CRT_HASH  DB.crt") || \
+        ! diff <(sha256sum DB.key) <(echo "$DB_KEY_HASH  DB.key")
+    then
+        error_exit "Wrong DB.crt/DB.key sha256 hash"
+    fi
+    cp "$SCRIPTDIR/LockDown.efi" .
+    sbsign --key DB.key --cert DB.crt --output "hello.efi" "$HELLO_EFI"
+    # remove everything except "LockDown.efi" and "hello.efi"
+    find -maxdepth 1 -type f ! -name "LockDown.efi" ! -name "hello.efi" -exec rm {} \;
+
+    popd >/dev/null || error_exit "Couldn't popd"
+}
+
+create_privisioning_kek_test() {
+    local TEST=$1
+    local COMMIT=b2c2716c20afa76575b431e0a4cfd126e6df766f
+    local KEK_CRT_HASH=1a67de100cfc909a1a84fc2444e8378a01fe1fecb2cd37a6b4634b10662a21d2 
+    mkdir "$TEST"
+
+    pushd "$TEST" >/dev/null || error_exit "Couldn't enter $TEST"
+
+    wget https://raw.githubusercontent.com/Wind-River/meta-secure-core/$COMMIT/meta-signing-key/files/uefi_sb_keys/KEK.crt
+    if ! diff <(sha256sum KEK.crt) <(echo "$KEK_CRT_HASH  KEK.crt"); then
+        error_exit "Wrong KEK.crt sha256 hash"
+    fi
+    openssl x509 -fingerprint -in KEK.crt -noout -text > KEK2.crt
+    mv KEK2.crt KEK.crt
 
     popd >/dev/null || error_exit "Couldn't popd"
 }
@@ -255,6 +330,8 @@ create_test SBO010.004 y create_ecdsa_key 256
 create_test SBO010.005 y create_ecdsa_key 384
 create_test SBO010.006 y create_ecdsa_key 521
 create_test SBO011.001 y create_expired_cert
+create_privisioning_test SBO013.001
+create_privisioning_kek_test SBO013.002
 
 echo "creating iso image"
 create_iso
