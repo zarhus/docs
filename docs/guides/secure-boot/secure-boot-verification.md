@@ -70,18 +70,23 @@ USB directory layout:
 
 ## Tests
 
+On ODROID-H4, BIOS version ADLN-H4 1.05 there is a weird quirk in when you can
+edit SB settings (e.g. state, adding certificates or restoring to default).
+Due to that you should reboot platform before each test.
+
+<!-- more on https://forum.odroid.com/viewtopic.php?f=173&t=49144 -->
+
 ### SBO002.001 Secure Boot can be enabled from boot menu and is seen from OS
 
 **Description**
 
 This test verifies that Secure Boot can be enabled from the boot menu and, after
-the DUT reset, it is seen from the OS.
+the platform reset, it is seen from the OS.
 
 **Steps**
 
-1. [Enter BIOS setup menu](./secure-boot-bios.md#enter-bios-setup-menu)
 1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. Boot and log into OS
 1. Enter the following command and note the output
 
@@ -118,13 +123,12 @@ key.
 
 **Prerequisites**
 
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+
 **Steps**
 
-1. [Enter BIOS setup menu](./secure-boot-bios.md#enter-bios-setup-menu)
-1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 1. [Add SBO003.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO003.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
@@ -151,10 +155,17 @@ This test verifies that Secure Boot blocks booting unsigned file.
 
 **Expected result**
 
-Screen should show:
+Booting file should fail with Secure Boot error e.g.:
 
 ```text
-Access Denied
+/---------- Secure Boot Violation ----------\
+|                                           |
+| Invalid signature detected. Check Secure  |
+|           Boot Policy in Setup            |
+|                                           |
+|-------------------------------------------|
+|                    Ok                     |
+\-------------------------------------------/
 ```
 
 ### SBO006.001 Reset Secure Boot Keys option availability
@@ -167,13 +178,15 @@ This test aims to verify, that the Reset Secure Boot Keys option is available
 
 **Steps**
 
-1. [Enter Secure Boot menu](./secure-boot-bios.md#enter-secure-boot-menu)
-1. If using Dasharo firmware then
-    [enter keys management menu](./secure-boot-bios.md#enter-advanced-secure-boot-keys-management-menu)
+1. [Enter Secure Boot Key Management menu](./secure-boot-bios.md#enter-secure-boot-key-management-menu)
 
 **Expected result**
 
-`Reset to default Secure Boot Keys` option should be available
+Option to restore SB keys should be available e.g.
+
+```text
+Restore Factory Keys
+```
 
 ### SBO007.001 Attempt to boot the file after restoring keys to default
 
@@ -187,25 +200,29 @@ This test verifies that the Reset Secure Boot Keys option works correctly.
     succeeded
 * [SBO006.001](#sbo006001-reset-secure-boot-keys-option-availability)
     succeeded
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
-1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
-1. Save changes and reboot
-1. [Enter Secure Boot menu](./secure-boot-bios.md#enter-secure-boot-menu)
-1. If using Dasharo firmware then
-    [enter keys management menu](./secure-boot-bios.md#enter-advanced-secure-boot-keys-management-menu)
-1. Select `Reset Secure Boot Keys` and accept
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. [Enter Secure Boot Key Management menu](./secure-boot-bios.md#enter-secure-boot-key-management-menu)
+1. Select option to restore Secure Boot keys e.g. `Restore Factory Keys`
+and accept
+1. Save changes and reboot platform
 1. [Boot SBO003.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
 
-Screen should show:
+Booting file should fail with Secure Boot error e.g.:
 
 ```text
-Access Denied
+/---------- Secure Boot Violation ----------\
+|                                           |
+| Invalid signature detected. Check Secure  |
+|           Boot Policy in Setup            |
+|                                           |
+|-------------------------------------------|
+|                    Ok                     |
+\-------------------------------------------/
 ```
 
 ### SBO008.001 Attempt to enroll the key in the incorrect format
@@ -217,15 +234,24 @@ incorrect format
 
 **Prerequisites**
 
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
+
 **Steps**
 
-1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 1. [Add SBO008.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
 
 **Expected result**
 
+Adding certificate should end in failure e.g.
+
 ```text
-ERROR: Unsupported file type!
+┌── Append  ───┐
+│              │
+│    Failed    │
+│              │
+├──────────────┤
+│      Ok      │
+└──────────────┘
 ```
 
 ### SBO009.001 Attempt to boot file signed for intermediate certificate
@@ -237,13 +263,12 @@ executed.
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO009.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO009.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
@@ -265,16 +290,17 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO010.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
+
+Screen should show:
 
 ```text
 Hello, world!
@@ -289,16 +315,17 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.002/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO010.002/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
+
+Screen should show:
 
 ```text
 Hello, world!
@@ -313,16 +340,17 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.003/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO010.003/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
+
+Screen should show:
 
 ```text
 Hello, world!
@@ -337,16 +365,17 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.004/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO010.004/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
+
+Screen should show:
 
 ```text
 Hello, world!
@@ -361,16 +390,17 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.005/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO010.005/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
+
+Screen should show:
 
 ```text
 Hello, world!
@@ -385,16 +415,17 @@ can boot file signed with this certificate.
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO010.006/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot platform
 1. [Boot SBO010.006/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
+
+Screen should show:
 
 ```text
 Hello, world!
@@ -408,19 +439,27 @@ This test verifies that an expired certificate cannot be used to boot image
 
 **Prerequisites**
 
-* [Disabled Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+* [Enabled Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 
 **Steps**
 
 1. [Add SBO011.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
-1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and reboot DUT
+1. Save changes and reboot
 1. [Boot SBO011.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
 
+Booting file should fail with Secure Boot error e.g.:
+
 ```text
-Access Denied
+/---------- Secure Boot Violation ----------\
+|                                           |
+| Invalid signature detected. Check Secure  |
+|           Boot Policy in Setup            |
+|                                           |
+|-------------------------------------------|
+|                    Ok                     |
+\-------------------------------------------/
 ```
 
 ### SBO014.001 Enroll certificates using sbctl
@@ -443,9 +482,9 @@ BIOS. On Dasharo we can check PKCS7_GUID of KEK and DB (but not PK).
 **Steps**
 
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. If applicable disable key provisioning (e.g. AMI BIOS)
 1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
-    - Disable factory key provisioning if using AMI BIOS
-1. Save changes and restart DUT
+1. Save changes and restart platform
 1. Boot and log into OS
 1. Remove old Secure Boot keys
 
@@ -470,7 +509,7 @@ BIOS. On Dasharo we can check PKCS7_GUID of KEK and DB (but not PK).
     Enrolled keys to the EFI variables!
     ```
 
-1. Reboot DUT
+1. Reboot platform
 1. [Enter Secure Boot menu](./secure-boot-bios.md#enter-secure-boot-menu)
 1. [Check enrolled KEK GUID](./secure-boot-bios.md#check-enrolled-keys)
 1. [Check enrolled DB GUID](./secure-boot-bios.md#check-enrolled-keys)
@@ -506,9 +545,9 @@ inside OS.
     ✓ Signed /boot/efi/EFI/ubuntu/shimx64.efi
     ```
 
-1. Reboot DUT
+1. Reboot platform
 1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
-1. Save changes and restart DUT
+1. Save changes and restart platform
 1. Boot and log into OS
 1. Verify that Secure Boot is enabled
 
@@ -543,9 +582,9 @@ format from the operating system while using sbctl.
 **Steps**
 
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. If applicable disable key provisioning (e.g. AMI BIOS)
 1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
-    - Disable factory key provisioning if using AMI BIOS
-1. Save changes and restart DUT
+1. Save changes and restart platform
 1. Boot and log into OS
 1. Remove old Secure Boot keys
 
@@ -592,7 +631,7 @@ couldn't sync keys
 **Description**
 
 This test verifies that the automatic certificate provisioning will install
-custom keys which will allow to boot signed `hello.efi` file
+custom keys which will allow booting signed `hello.efi` file
 
 <!--
 Fix description in Dasharo docs? There the test conclusion is 'which will make
@@ -605,12 +644,12 @@ provisioning but due to erasing all secure boot keys
 **Steps**
 
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
-1. Save changes and restart
+1. If applicable disable key provisioning (e.g. AMI BIOS)
 1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
     - Disable factory key provisioning if using AMI BIOS
 1. Save changes and restart.
 1. [Boot SBO013.001/LockDown.efi file](./secure-boot-bios.md#boot-efi-file)
-1. Wait until DUT reboots automatically
+1. Wait until platform reboots automatically
 1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
 1. Save changes and restart
 1. [Boot SBO013.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
@@ -644,7 +683,7 @@ KEK certificate
     ```
 
 1. Compare current KEK certificate with one that should be enrolled.
-    Replace `<usb/mount>` with path to where USB drive is mounted.
+Replace `<usb/mount>` with path to where USB drive is mounted.
 
     ```shell
     diff <usb/mount>/SBO013.002/KEK.crt current_certificate.crt --color=always
