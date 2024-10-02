@@ -18,7 +18,8 @@
 
 ### USB drive
 
-1. Run `generate-image.sh` script. It'll generate `tests.img` file
+1. Run [generate-image.sh](./generate-image.sh) script. It'll generate
+`tests.img` file
 1. Flash this file to USB drive
 
 USB directory layout:
@@ -72,6 +73,8 @@ USB directory layout:
 
 On ODROID-H4, BIOS version ADLN-H4 1.05 there is a weird quirk in when you can
 edit SB settings (e.g. state, adding certificates or restoring to default).
+It's described in more details on
+[ODROID forum](https://forum.odroid.com/viewtopic.php?f=173&t=49144).
 Due to that you should reboot platform before each test.
 
 <!-- more on https://forum.odroid.com/viewtopic.php?f=173&t=49144 -->
@@ -127,7 +130,7 @@ key.
 
 **Steps**
 
-1. [Add SBO003.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO003.001/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO003.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -178,7 +181,7 @@ This test aims to verify, that the Reset Secure Boot Keys option is available
 
 **Steps**
 
-1. [Enter Secure Boot Key Management menu](./secure-boot-bios.md#enter-secure-boot-key-management-menu)
+1. [Enter Secure Boot key management menu](./secure-boot-bios.md#enter-secure-boot-key-management-menu)
 
 **Expected result**
 
@@ -204,7 +207,7 @@ This test verifies that the Reset Secure Boot Keys option works correctly.
 
 **Steps**
 
-1. [Enter Secure Boot Key Management menu](./secure-boot-bios.md#enter-secure-boot-key-management-menu)
+1. [Enter Secure Boot key management menu](./secure-boot-bios.md#enter-secure-boot-key-management-menu)
 1. Select option to restore Secure Boot keys e.g. `Restore Factory Keys`
 and accept
 1. Save changes and reboot platform
@@ -238,7 +241,7 @@ incorrect format
 
 **Steps**
 
-1. [Add SBO008.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO008.001/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 
 **Expected result**
 
@@ -267,7 +270,7 @@ executed.
 
 **Steps**
 
-1. [Add SBO009.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO009.001/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO009.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -294,7 +297,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.001/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO010.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -319,7 +322,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.002/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.002/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO010.002/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -344,7 +347,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.003/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.003/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO010.003/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -369,7 +372,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.004/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.004/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO010.004/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -394,7 +397,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.005/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.005/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO010.005/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -419,7 +422,7 @@ can boot file signed with this certificate.
 
 **Steps**
 
-1. [Add SBO010.006/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO010.006/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot platform
 1. [Boot SBO010.006/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -443,7 +446,7 @@ This test verifies that an expired certificate cannot be used to boot image
 
 **Steps**
 
-1. [Add SBO011.001/cert.der](./secure-boot-bios.md#add-secure-boot-certificate)
+1. [Add SBO011.001/cert.der to DB](./secure-boot-bios.md#add-secure-boot-certificate)
 1. Save changes and reboot
 1. [Boot SBO011.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
@@ -483,7 +486,7 @@ BIOS. On Dasharo we can check PKCS7_GUID of KEK and DB (but not PK).
 
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 1. If applicable disable key provisioning (e.g. AMI BIOS)
-1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
+1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-all-secure-boot-keys)
 1. Save changes and restart platform
 1. Boot and log into OS
 1. Remove old Secure Boot keys
@@ -510,7 +513,7 @@ BIOS. On Dasharo we can check PKCS7_GUID of KEK and DB (but not PK).
     ```
 
 1. Reboot platform
-1. [Enter Secure Boot menu](./secure-boot-bios.md#enter-secure-boot-menu)
+1. [Enter Secure Boot key management menu](./secure-boot-bios.md#enter-secure-boot-key-management-menu)
 1. [Check enrolled KEK GUID](./secure-boot-bios.md#check-enrolled-keys)
 1. [Check enrolled DB GUID](./secure-boot-bios.md#check-enrolled-keys)
 
@@ -583,7 +586,7 @@ format from the operating system while using sbctl.
 
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 1. If applicable disable key provisioning (e.g. AMI BIOS)
-1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
+1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-all-secure-boot-keys)
 1. Save changes and restart platform
 1. Boot and log into OS
 1. Remove old Secure Boot keys
@@ -645,9 +648,8 @@ provisioning but due to erasing all secure boot keys
 
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
 1. If applicable disable key provisioning (e.g. AMI BIOS)
-1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-secure-boot-keys)
-    - Disable factory key provisioning if using AMI BIOS
-1. Save changes and restart.
+1. [Remove Secure Boot keys](./secure-boot-bios.md#remove-all-secure-boot-keys)
+1. Save changes and restart platform
 1. [Boot SBO013.001/LockDown.efi file](./secure-boot-bios.md#boot-efi-file)
 1. Wait until platform reboots automatically
 1. [Enable Secure Boot](./secure-boot-bios.md#enable-secure-boot)
@@ -655,6 +657,8 @@ provisioning but due to erasing all secure boot keys
 1. [Boot SBO013.001/hello.efi file](./secure-boot-bios.md#boot-efi-file)
 
 **Expected result**
+
+Screen should show:
 
 ```text
 Hello, world!
@@ -674,6 +678,7 @@ KEK certificate
 **Steps**
 
 1. [Disable Secure Boot](./secure-boot-bios.md#disable-secure-boot)
+1. Save changes and restart platform.
 1. Boot and log into OS
 1. Mount USB drive with tests if it wasn't mounted automatically
 1. Export currently enrolled certificate
