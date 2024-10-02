@@ -18,8 +18,22 @@
 
 ### USB drive
 
-1. Run [generate-image.sh](./generate-image.sh) script. It'll generate
-`tests.img` file
+1. Download [generate-image.sh](./generate-image.sh)
+1. Build `LockDown.efi`. To do that install
+[needed prerequisites](https://docs.dasharo.com/dasharo-tools-suite/documentation/#prerequisites),
+checkout tag `v1.2.23` in `meta-dts`
+and then build `efitools` which will build `LockDown.efi` with sample keys
+
+    ```shell
+    SHELL=/bin/bash kas-container shell meta-dts/kas-uefi-sb.yml -c "bitbake efitools"`
+    ```
+
+1. Copy `LockDown.efi` to directory containing `generate-image.sh` script.
+It should be inside `build/tmp/deploy/images/genericx86_64`.
+Sample keys and certificates used in `LockDown.efi` are in
+`build/tmp/deploy/images/genericx86_64/sample-keys/uefi_sb_keys`
+1. Run `generate-image.sh` script. It'll generate `tests.img` file containing
+needed files and certificates
 1. Flash this file to USB drive
 
 USB directory layout:
