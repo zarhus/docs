@@ -137,6 +137,8 @@ create_expired_cert() {
     error_check "Cannot create expired rsa der cert"
 }
 
+# Create FAT image containing everything in $FILES and create
+# `add-boot-options.sh` script
 create_iso() {
     IMAGELABEL="tests"
     IMAGEPATH="$TEMPDIR/$IMAGELABEL.img"
@@ -198,8 +200,8 @@ EOF
     error_check "Couldn't delete loop device $dev"
 }
 
+# create_test <test_name> <sign_efi> <create_key_function> [args...]
 create_test() {
-    # create_test <test_name> <sign_efi> <create_key_function> [args...]
     local TEST=$1
     local SIGN="$2"
     shift 2
@@ -226,7 +228,8 @@ create_test() {
     popd >/dev/null || error_exit "Couldn't popd"
 }
 
-create_privisioning_test() {
+# create_provisioning_test <test_name>
+create_provisioning_test() {
     local TEST=$1
     local COMMIT=b2c2716c20afa76575b431e0a4cfd126e6df766f
     local DB_CRT_HASH=80aea212df9d1855e00251d80d1b384f9e7d7c48c4d6491f5a346dd52b3c2260
@@ -250,7 +253,8 @@ create_privisioning_test() {
     popd >/dev/null || error_exit "Couldn't popd"
 }
 
-create_privisioning_kek_test() {
+# create_provisioning_kek_test <test_name>
+create_provisioning_kek_test() {
     local TEST=$1
     local COMMIT=b2c2716c20afa76575b431e0a4cfd126e6df766f
     local KEK_CRT_HASH=1a67de100cfc909a1a84fc2444e8378a01fe1fecb2cd37a6b4634b10662a21d2
@@ -270,7 +274,6 @@ create_privisioning_kek_test() {
 
 cleanup() {
     echo "removing $TEMPDIR"
-    tree $TEMPDIR/files
     rm -r "$TEMPDIR"
 }
 
@@ -330,8 +333,8 @@ create_test SBO010.004 y create_ecdsa_key 256
 create_test SBO010.005 y create_ecdsa_key 384
 create_test SBO010.006 y create_ecdsa_key 521
 create_test SBO011.001 y create_expired_cert
-create_privisioning_test SBO013.001
-create_privisioning_kek_test SBO013.002
+create_provisioning_test SBO013.001
+create_provisioning_kek_test SBO013.002
 
 echo "creating iso image"
 create_iso
