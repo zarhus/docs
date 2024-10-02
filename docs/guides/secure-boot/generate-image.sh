@@ -229,10 +229,10 @@ create_test() {
 create_privisioning_test() {
     local TEST=$1
     local COMMIT=b2c2716c20afa76575b431e0a4cfd126e6df766f
-    local DB_CRT_HASH=80aea212df9d1855e00251d80d1b384f9e7d7c48c4d6491f5a346dd52b3c2260 
+    local DB_CRT_HASH=80aea212df9d1855e00251d80d1b384f9e7d7c48c4d6491f5a346dd52b3c2260
     local DB_KEY_HASH=da2bb57a51a7eb7f701c17d9f7e8ade7668fe204af5518e520580328f7e64231
     mkdir "$TEST"
-    
+
     pushd "$TEST" >/dev/null || error_exit "Couldn't enter $TEST"
 
     wget https://raw.githubusercontent.com/Wind-River/meta-secure-core/$COMMIT/meta-signing-key/files/uefi_sb_keys/DB.crt
@@ -253,7 +253,7 @@ create_privisioning_test() {
 create_privisioning_kek_test() {
     local TEST=$1
     local COMMIT=b2c2716c20afa76575b431e0a4cfd126e6df766f
-    local KEK_CRT_HASH=1a67de100cfc909a1a84fc2444e8378a01fe1fecb2cd37a6b4634b10662a21d2 
+    local KEK_CRT_HASH=1a67de100cfc909a1a84fc2444e8378a01fe1fecb2cd37a6b4634b10662a21d2
     mkdir "$TEST"
 
     pushd "$TEST" >/dev/null || error_exit "Couldn't enter $TEST"

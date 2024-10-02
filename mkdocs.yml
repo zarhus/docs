@@ -75,4 +75,5 @@ nav:
   - 'Guides':
       - 'Managing packages': guides/managing-packages.md
       - 'Managing layers': guides/managing-layers.md
+      - 'Secure Boot Verification': guides/secure-boot/secure-boot-verification.md
   - 'FAQ': faq.md
