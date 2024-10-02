@@ -148,14 +148,14 @@ create_iso() {
     error_check "Cannot create empty image file to store created certs and efi files"
     # Create GPT table and EFI partition
     fdisk "$IMAGEPATH" << EOF
-    g
-    n
-    1
+g
+n
+1
 
 
-    t
-    1
-    w
+t
+1
+w
 EOF
     error_check "fdisk failed"
 
