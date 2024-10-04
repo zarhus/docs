@@ -19,24 +19,107 @@
 ### USB drive
 
 1. Download [generate-image.sh](./generate-image.sh)
-1. Build `LockDown.efi`. To do that install
-[needed prerequisites](https://docs.dasharo.com/dasharo-tools-suite/documentation/#prerequisites),
-checkout tag `v1.2.23` in `meta-dts`
-and then build `efitools` which will build `LockDown.efi` with sample keys
+1. Build [LockDown.efi](#lockdownefi) file
+1. Build [hello.efi](#helloefi) file
+1. Run `generate-image.sh` script. It'll generate `tests.img` file containing
+needed files and certificates
+1. Flash this file to USB drive
+
+#### LockDown.efi
+
+**Dependencies**
+
+* [kas-container](https://docs.dasharo.com/dasharo-tools-suite/documentation/#prerequisites)
+* [git](https://git-scm.com/)
+
+**Steps**
+
+1. Clone and checkout tag `v1.2.23`
+
+    ```shell
+    git clone --depth 1 --branch v1.2.23 https://github.com/Dasharo/meta-dts.git
+    ```
+
+1. Build `efitools` recipe which will build `LockDown.efi` with sample keys
 
     ```shell
     SHELL=/bin/bash kas-container shell meta-dts/kas-uefi-sb.yml -c "bitbake efitools"`
     ```
 
-1. Copy `LockDown.efi` to directory containing `generate-image.sh` script.
-It should be inside `build/tmp/deploy/images/genericx86_64`.
-Sample keys and certificates used in `LockDown.efi` are in
+1. Copy `LockDown.efi` to directory containing `generate-image.sh` script.</br>
+File should be inside `build/tmp/deploy/images/genericx86_64` directory.</br>
+Sample keys and certificates used in `LockDown.efi` can be viewed in
 `build/tmp/deploy/images/genericx86_64/sample-keys/uefi_sb_keys`
-1. Run `generate-image.sh` script. It'll generate `tests.img` file containing
-needed files and certificates
-1. Flash this file to USB drive
 
-USB directory layout:
+#### hello.efi
+
+**Dependencies**
+
+* [Docker](https://docs.docker.com/engine/install/)
+* [git](https://git-scm.com/)
+
+**Steps**
+
+1. Pull docker image that'll contain tools needed to build `hello.efi`
+<https://github.com/tianocore/containers?tab=readme-ov-file#Current-Status>.
+
+    ```shell
+    docker pull ghcr.io/tianocore/containers/fedora-39-build:46802aa
+    ```
+
+1. Get source code for EDK2
+
+    ```shell
+    git clone --depth 1 --recurse-submodules --shallow-submodules --branch edk2-stable202408 https://github.com/tianocore/edk2.git
+    ```
+
+1. Add sleep (in this case 2 seconds) to `HelloWorld.c` otherwise output will
+disappear too fast for human to see
+
+    ```shell
+    cd edk2
+    git apply <<EOF
+    diff --git a/MdeModulePkg/Application/HelloWorld/HelloWorld.c b/MdeModulePkg/Application/HelloWorld/HelloWorld.c
+    index 9b77046e561c..ebd4ad9d6a79 100644
+    --- a/MdeModulePkg/Application/HelloWorld/HelloWorld.c
+    +++ b/MdeModulePkg/Application/HelloWorld/HelloWorld.c
+    @@ -56,5 +56,6 @@ UefiMain (
+         }
+       }
+
+    +  SystemTable->BootServices->Stall(2000000);
+       return EFI_SUCCESS;
+     }
+    EOF
+    ```
+
+1. Build `HelloWorld.efi`
+
+    ```shell
+    docker run -v $(pwd):/edk2 -w /edk2 --entrypoint bash --rm \
+        ghcr.io/tianocore/containers/fedora-39-build:46802aa -c ' \
+            source edksetup.sh && make -C BaseTools && build -a X64 -t GCC5 \
+                -p MdeModulePkg/MdeModulePkg.dsc \
+                -m MdeModulePkg/Application/HelloWorld/HelloWorld.inf -b RELEASE'
+    ```
+
+    Build should complete with
+
+    ```text
+    (...)
+    - Done -
+    Build end time: 12:51:06, Oct.04 2024
+    Build total time: 00:00:06
+    ```
+
+1. Copy built `HelloWorld.efi` file to directory with `generate-image.sh` and
+rename it to `hello.efi`
+
+    ```shell
+    cp Build/MdeModule/RELEASE_GCC5/X64/HelloWorld.efi <replace/this/path/>hello.efi
+    ```
+
+#### USB directory layout
 
 ```text
 .

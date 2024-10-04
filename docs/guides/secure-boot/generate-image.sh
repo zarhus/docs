@@ -309,9 +309,7 @@ if [ $# -ne 0 ]; then
 fi
 
 SCRIPTDIR=$(readlink -f "$(dirname "$0")")
-HELLO_EFI="$(mktemp)"
-wget -O $HELLO_EFI \
-    https://github.com/Dasharo/open-source-firmware-validation/raw/refs/heads/encrypted-rootfs-release-rebase/scripts/secure-boot/generate-images/hello.efi
+HELLO_EFI="$(realpath hello.efi)"
 
 TEMPDIR=$(mktemp -d)
 trap "cleanup" EXIT
