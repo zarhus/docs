@@ -25,7 +25,8 @@ process will be described in layer-specific documentation.
       already explain that).
     - Describe any additional changes.
 4. Commit and push the changelog.
-5. Create and push tag that matches the newly bumped version.
+5. Create and push tag that matches the newly bumped version with `v` added at
+   the beginning (e.g. `v2.0.1-rc1`).
 6. Publish the release on GitHub. Make sure to upload the manifest. In case of a
    `release candidate`, you should publish it as a pre-release.
 
