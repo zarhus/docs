@@ -7,7 +7,7 @@ process will be described in layer-specific documentation.
 ## Process steps
 
 1. Make sure that everything that should go into the given release is merged
-   into `main`.
+   into `develop`.
 2. Bump `DISTRO_VERSION` in the `conf/distro/<distro-name>.conf` file.
 3. Fill up the `CHANGELOG.md` file with latest changes.
     - Run `generate-changelog.sh` to generate the change notes for your release.
@@ -25,6 +25,7 @@ process will be described in layer-specific documentation.
       already explain that).
     - Describe any additional changes.
 4. Commit and push the changelog.
+5. Merge the changes from `develop` into `main`.
 5. Create and push tag that matches the newly bumped version with `v` added at
    the beginning (e.g. `v2.0.1-rc1`).
 6. Publish the release on GitHub. Make sure to upload the manifest. In case of a
