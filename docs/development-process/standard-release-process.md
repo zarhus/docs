@@ -26,10 +26,14 @@ process will be described in layer-specific documentation.
     - Describe any additional changes.
 4. Commit and push the changelog.
 5. Merge the changes from `develop` into `main`.
-5. Create and push tag that matches the newly bumped version with `v` added at
-   the beginning (e.g. `v2.0.1-rc1`).
-6. Publish the release on GitHub. Make sure to upload the manifest. In case of a
-   `release candidate`, you should publish it as a pre-release.
+6. Create and push a tag to `main` that matches the newly bumped version, with
+   `v` added at the beginning (e.g. `v2.0.1-rc1`).
+7. Publish the release on GitHub. The release description should be the same as
+   the release notes for that version. The following artifacts should be
+   uploaded: The image (usually as `wic.gz` and `wic.bmap`), the manifest and
+   `sha256` sum of each of those files. Additionally, if possible, upload the
+   signatures of files (`*.sha256.sig`). In case of a `release candidate`, you
+   should publish it as a pre-release.
 
 ## Versioning scheme
 
