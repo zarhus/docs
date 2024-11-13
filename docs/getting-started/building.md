@@ -52,25 +52,39 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
 
 ## Build
 
-From `yocto` directory run:
+Depending on which features you want to have in your build, pass the desired
+`.yml` files via command line. You can read more on that in
+[kas documentation.](https://kas.readthedocs.io/en/latest/userguide/project-configuration.html#including-configuration-files-via-the-command-line)
+
+Then check BSP layers for available target platform (target platforms configs
+are located in `conf/machine` directory of every BSP layer) and choose one.
+Then, from `yocto` directory run:
 
 ```shell
-$ SHELL=/bin/bash kas-container build meta-zarhus/kas-IMAGE_TYPE.yml
+SHELL=/bin/bash KAS_MACHINE=<TARGET_NAME> kas-container build <KAS_FILES>
 ```
 
 !!! note
 
-    Replace `IMAGE_TYPE` with either `debug` or `prod`.
+    Replace `<TARGET_NAME>` with the name of the chosen target
+    configuration file, and `<KAS_FILES>` with a list of kas files, separated by
+    `:`.
 
-Image build takes time, so be patient and after the build finishes you should see
-something similar to this (the exact tasks numbers may differ):
+For example:
 
 ```shell
-Initialising tasks: 100% |###########################################################################################| Time: 0:00:01
-Sstate summary: Wanted 2 Found 0 Missed 2 Current 931 (0% match, 99% complete)
-NOTE: Executing Tasks
-NOTE: Tasks Summary: Attempted 2532 tasks of which 2524 didn't need to be rerun and all succeeded.
+SHELL=/bin/bash KAS_MACHINE=orangepi-cm4 kas-container build meta-zarhus/kas/common.yml:meta-zarhus/kas/rockchip.yml
 ```
+
+* Image build takes time, so be patient and after build's finish you should see
+something similar to (the exact tasks numbers may differ):
+
+  ```shell
+  Initialising tasks: 100% |###########################################################################################| Time: 0:00:01
+  Sstate summary: Wanted 2 Found 0 Missed 2 Current 931 (0% match, 99% complete)
+  NOTE: Executing Tasks
+  NOTE: Tasks Summary: Attempted 2532 tasks of which 2524 didn't need to be rerun and all succeeded.
+  ```
 
 # Verification
 
