@@ -131,7 +131,7 @@ guide](../getting-started/building.md).
 After the image has been built - locate and copy the image to a known location:
 
 ```bash
-cp build/tmp/deploy/images/zarhus-machine-cm3/zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic.gz ./
+cp build/tmp/deploy/images/radxa-cm3/zarhus-base-image-IMAGE_VER-radxa-cm3.rootfs.wic.gz ./
 ```
 
 !!! note
@@ -142,7 +142,7 @@ cp build/tmp/deploy/images/zarhus-machine-cm3/zarhus-base-image-IMAGE_VER-zarhus
 Decompress the image (`rkdeveloptool` needs decompressed image):
 
 ```bash
-gunzip zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic.gz
+gunzip zarhus-base-image-IMAGE_VER-radxa-cm3.rootfs.wic.gz
 ```
 
 !!! note
@@ -153,8 +153,8 @@ gunzip zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic.gz
 Now you should have decompressed image file in your directory:
 
 ```bash
-file ./zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic
-zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic: DOS/MBR boot sector; partition 1 : ID=0xee, start-CHS (0x0,0,2), end-CHS (0x3ff,255,63), startsector 1, 687763 sectors, extended partition table (last)
+file ./zarhus-base-image-IMAGE_VER-radxa-cm3.rootfs.wic
+zarhus-base-image-IMAGE_VER-radxa-cm3.rootfs.wic: DOS/MBR boot sector; partition 1 : ID=0xee, start-CHS (0x0,0,2), end-CHS (0x3ff,255,63), startsector 1, 687763 sectors, extended partition table (last)
 ```
 
 !!! note
@@ -216,7 +216,7 @@ Downloading bootloader succeeded.
 Flash eMMC:
 
 ```bash
-rkdeveloptool wl 0x0 zarhus-base-image-IMAGE_VER-zarhus-machine-cm3.rootfs.wic
+rkdeveloptool wl 0x0 zarhus-base-image-IMAGE_VER-radxa-cm3.rootfs.wic
 Write LBA from file (100%)
 ```
 
