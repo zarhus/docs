@@ -24,12 +24,12 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/zarhus
-    # - icon: fontawesome/brands/mastodon
-    #   link: https://fosstodon.org/@TBD
-    # - icon: fontawesome/brands/twitter
-    #   link: https://twitter.com/TBD
-    # - icon: fontawesome/brands/reddit
-    #   link: https://www.reddit.com/r/TBD
+      # - icon: fontawesome/brands/mastodon
+      #   link: https://fosstodon.org/@TBD
+      # - icon: fontawesome/brands/twitter
+      #   link: https://twitter.com/TBD
+      # - icon: fontawesome/brands/reddit
+      #   link: https://www.reddit.com/r/TBD
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
@@ -73,9 +73,9 @@ nav:
       - 'Radxa':
           - 'Radxa CM3': supported-targets/radxa-cm3.md
   - 'Guides':
-    - 'Managing packages': guides/managing-packages.md
-    - 'Managing layers': guides/managing-layers.md
-    - 'Secure Boot Verification': guides/secure-boot/secure-boot-verification.md
+      - 'Managing packages': guides/managing-packages.md
+      - 'Managing layers': guides/managing-layers.md
+      - 'Secure Boot Verification': guides/secure-boot/secure-boot-verification.md
   - 'Development Process':
       - 'Standard Release Process': development-process/standard-release-process.md
   - 'FAQ': faq.md
