@@ -55,6 +55,17 @@ This guide will demonstrate how to build a Zarhus OS image from zero!
 Depending on which features you want to have in your build, pass the desired
 `.yml` files via command line. You can read more on that in
 [kas documentation.](https://kas.readthedocs.io/en/latest/userguide/project-configuration.html#including-configuration-files-via-the-command-line)
+The files should be passed in a specific order. The file which is passed after
+some file will override settings set by the previously-passed file.
+
+Currently, the following files are present in `meta-zarhus/kas`:
+
+* `common.yml`: common configuration file, should be included in all builds;
+* `cache.yml`: file for cache mirrors configuration;
+* `debug.yml`: adds debug functionalities into the final image;
+* `rockchip.yml`: Rockchip-specific target configuration file, should be used
+  for Rockchip builds;
+* `webkit.yml`: includes Webkit and some additional functionalities into build.
 
 Then check BSP layers for available target platform (target platforms configs
 are located in `conf/machine` directory of every BSP layer) and choose one.
