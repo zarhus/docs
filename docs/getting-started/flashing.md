@@ -66,7 +66,7 @@ You should see output similar to this:
 ```shell
 bmaptool: info: block map format version 2.0
 bmaptool: info: 85971 blocks of size 4096 (335.8 MiB), mapped 42910 blocks (167.6 MiB or 49.9%)
-bmaptool: info: copying image 'zarhus-base-image-debug-zarhus-machine-cm3.rootfs.wic.gz' to block device '/dev/sdx' using bmap file 'zarhus-base-image-debug-zarhus-machine-cm3.rootfs.wic.bmap'
+bmaptool: info: copying image 'zarhus-base-image-debug-radxa-cm3.rootfs.wic.gz' to block device '/dev/sdx' using bmap file 'zarhus-base-image-debug-radxa-cm3.rootfs.wic.bmap'
 bmaptool: info: 100% copied
 bmaptool: info: synchronizing '/dev/sdx'
 bmaptool: info: copying time: 11.1s, copying speed 15.1 MiB/sec

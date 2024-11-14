@@ -85,9 +85,9 @@ Welcome to Distro for Zarhus product 0.1.0 (scarthgap)!
 [  OK  ] Finished Record Runlevel Change in UTMP.
 [  OK  ] Finished Virtual Console Setup.
 
-Distro for Zarhus product 0.1.0 zarhus-machine-cm3 ttyS2
+Distro for Zarhus product 0.1.0 radxa-cm3 ttyS2
 
-zarhus-machine-cm3 login:
+radxa-cm3 login:
 ```
 
 !!! note
