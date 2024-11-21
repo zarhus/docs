@@ -27,7 +27,7 @@ process will be described in layer-specific documentation.
 4. Commit and push the changelog.
 5. Merge the changes from `develop` into `main`.
 6. Create and push a tag to `main` that matches the newly bumped version, with
-   `v` added at the beginning (e.g. `v2.0.1-rc1`).
+   `v` added at the beginning (e.g. `v2.0.1-rc.1`).
 7. Publish the release on GitHub. The release description should be the same as
    the release notes for that version. The following artifacts should be
    uploaded: The image (usually as `wic.gz` and `wic.bmap`), the manifest and
