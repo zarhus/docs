@@ -19,9 +19,6 @@ Additional resources for the Raspberry Pi 4:
 1. Clone the `meta-zarhus` repository:
 ```
 git clone https://github.com/zarhus/meta-zarhus
-cd meta-zarhus
-git checkout rpi4
-cd ..
 ```
 
 2. Follow the instructions in the repository's
