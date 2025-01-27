@@ -3,6 +3,7 @@ site_name: Zarhus - Your Digital Chess Knight
 site_url: https://docs.zarhus.com
 
 repo_url: https://github.com/zarhus/docs
+edit_uri: blob/main/docs/
 theme:
   name: material
   # custom_dir: overrides
