@@ -72,10 +72,15 @@ nav:
       - 'Targets': supported-targets/targets.md
       - 'Radxa':
           - 'Radxa CM3': supported-targets/radxa-cm3.md
+      - 'PINE64':
+          - 'Quartz64 Model A': supported-targets/quartz64-a.md
   - 'Guides':
       - 'Managing packages': guides/managing-packages.md
       - 'Managing layers': guides/managing-layers.md
       - 'Secure Boot Verification': guides/secure-boot/secure-boot-verification.md
+      - 'OPTEE':
+        - 'OPTEE': guides/optee/optee.md
+        - 'OPTEE on RK3566': guides/optee/optee-on-rk3566.md
   - 'Development Process':
       - 'Standard Release Process': development-process/standard-release-process.md
   - 'FAQ': faq.md
