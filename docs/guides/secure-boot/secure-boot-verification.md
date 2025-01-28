@@ -29,7 +29,7 @@ needed files and certificates
 
 **Dependencies**
 
-* [kas-container](https://docs.dasharo.com/dasharo-tools-suite/documentation/#prerequisites)
+* [kas-container](https://docs.dasharo.com/dasharo-tools-suite/documentation/building/#prerequisites)
 * [git](https://git-scm.com/)
 
 **Steps**
