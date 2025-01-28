@@ -66,6 +66,8 @@ Currently, the following files are present in `meta-zarhus/kas`:
 * `rockchip.yml`: Rockchip-specific target configuration file, should be used
   for Rockchip builds;
 * `webkit.yml`: includes Webkit and some additional functionalities into build.
+* `rpi.yml`: includes a layer necessary for Raspberry Pi boards, as well
+  necessary config.
 
 Then check BSP layers for available target platform (target platforms configs
 are located in `conf/machine` directory of every BSP layer) and choose one.

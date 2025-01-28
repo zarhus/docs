@@ -72,6 +72,8 @@ nav:
       - 'Targets': supported-targets/targets.md
       - 'Radxa':
           - 'Radxa CM3': supported-targets/radxa-cm3.md
+      - 'Raspberry Pi':
+          - 'Raspberry Pi 4': supported-targets/rpi4.md
   - 'Guides':
       - 'Managing packages': guides/managing-packages.md
       - 'Managing layers': guides/managing-layers.md
