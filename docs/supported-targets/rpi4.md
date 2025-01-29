@@ -3,9 +3,9 @@
 ## Description and Resources
 
 The Raspberry Pi 4 is a versatile single-board computer suitable for a wide
-range of applications. This guide walks through building Zarhus OS from
-the `rpi4` branch in `meta-zarhus`, flashing the OS onto an SD card, and
-accessing the device via UART for debugging.
+range of applications. This guide walks through building Zarhus OS using
+`meta-zarhus`, flashing the OS onto an SD card, and accessing the device
+via UART for debugging.
 
 Additional resources for the Raspberry Pi 4:
 
@@ -62,20 +62,20 @@ To connect via UART for debugging:
 
 ### Software Setup
 
-1. Install a terminal program (e.g., `minicom` for Linux or
-[PuTTY](https://www.putty.org/) for Windows).
+1. Install a terminal program (e.g., `minicom` for Linux).
 
 2. Connect to the Raspberry Pi 4's UART console using the following parameters:
     - **Serial Port:** `/dev/ttyUSBX` (replace `X` with the port number assigned
     to your UART adapter)
-
-    Also make sure `Hardware Flow Control` is off.
 
 3. Launch `minicom` on a Linux host:
 
     ```sh
     minicom -D /dev/ttyUSBX
     ```
+
+    Also make sure `Hardware Flow Control` is off (`CTRL-A`, then `Z`, then `O`,
+    then `Serial port setup`, then `F` to disable `Hardware Flow Control`).
 
 4. You should now see the Zarhus OS boot console.
 
