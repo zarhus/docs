@@ -64,20 +64,18 @@ To connect via UART for debugging:
 
 1. Install a terminal program (e.g., `minicom` for Linux).
 
-2. Connect to the Raspberry Pi 4's UART console using the following parameters:
-    - **Serial Port:** `/dev/ttyUSBX` (replace `X` with the port number assigned
-    to your UART adapter)
-
-3. Launch `minicom` on a Linux host:
+2. Launch `minicom` on a Linux host to connect to the RPi4:
 
     ```sh
     minicom -D /dev/ttyUSBX
     ```
 
-    Also make sure `Hardware Flow Control` is off (`CTRL-A`, then `Z`, then `O`,
-    then `Serial port setup`, then `F` to disable `Hardware Flow Control`).
+    Also make sure `Hardware Flow Control` is off (`CTRL-A`, then `Z` to
+    open the menu, then `O` to `Configure minicom`, then choose
+    `Serial port setup`, then (if it's enabled) press `F` to
+    disable `Hardware Flow Control`).
 
-4. You should now see the Zarhus OS boot console.
+3. You should now see the Zarhus OS boot console.
 
 From this point, you can login (login `root`) to monitor and debug the
 Raspberry Pi 4 running Zarhus OS.
