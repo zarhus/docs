@@ -9,3 +9,4 @@ This section contains a list of supported vendors and their targets.
 ## Raspberry Pi
 
 * [Raspberry Pi 4](./rpi4.md)
+* [Raspberry Pi 4 for the CROSSCON Hypervisor](./rpi4-crosscon-hypervisor.md)
