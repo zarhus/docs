@@ -3,7 +3,7 @@
 ## Description and resources
 
 The [Quartz64 Model A](https://pine64.org/devices/quartz64_model_a/) is a SBC
-based on Rockchip RK3566 and produced by PINE64. 
+based on Rockchip RK3566 and produced by PINE64.
 
 Additional resources for the board:
 
