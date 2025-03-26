@@ -9,3 +9,7 @@ This section contains a list of supported vendors and their targets.
 ## Raspberry Pi
 
 * [Raspberry Pi 4](./rpi4.md)
+
+## PINE64
+
+* [Quartz64 Model A SBC](./quartz64-a.md)
