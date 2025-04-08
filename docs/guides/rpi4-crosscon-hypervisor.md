@@ -170,14 +170,14 @@ needs to be applied:
 ```git
 root@565810a48049:/work/crosscon/CROSSCON-Hypervisor# git diff src/arch/armv8/aborts.c
 diff --git a/src/arch/armv8/aborts.c b/src/arch/armv8/aborts.c
-index a7f5adc..503dc30 100644
+index a7f5adc..90e1262 100644
 --- a/src/arch/armv8/aborts.c
 +++ b/src/arch/armv8/aborts.c
 @@ -43,6 +43,7 @@ void internal_abort_handler(uint64_t gprs[]) {
 
  void aborts_data_lower(uint64_t iss, uint64_t far, uint64_t il)
  {
-+    printk("magic printk\n");
++    printk("\x9D");
      if (!(iss & ESR_ISS_DA_ISV_BIT) || (iss & ESR_ISS_DA_FnV_BIT)) {
          ERROR("no information to handle data abort (0x%x)", far);
      }
@@ -190,7 +190,9 @@ root@565810a48049:/work/crosscon/CROSSCON-Hypervisor#
     necessary to use in order to apply this change.
 
 This additional `printk` keeps the UART output going, so that the console can
-be accessed. Right now, according to
+be accessed. `\x9D` is unprintable character and is used so it doesn't pollute
+serial output. It mostly works (sometimes you can see cursor changing position).
+Right now, according to
 [this issue](https://github.com/crosscon/CROSSCON-Hypervisor-and-TEE-Isolation-Demos/issues/8#issuecomment-2702293550)
 this is the only workaround.
 
