@@ -51,18 +51,12 @@ sure to copy the actual kernel, not the symlink):
 
 ```bash
 cd build/tmp/deploy/images/raspberrypi4-64/
-file Image
-docker cp Image-1-6.6.22+git0+6a24861d65_c04af98514-r0-raspberrypi4-64-20250226164115.bin crosscon_hv_container:/work/Image
+docker cp -L Image crosscon_hv_container:/work/Image
 ```
 
 !!! note
 
-    The `file Image` command is critical here, because the `Image`
-    file is actually just a symlink. By using that command, it reveals the true
-    location of the actual kernel file (in this example it was
-    `Image-1-6.6.22+git0+6a24861d65_c04af98514-r0-raspberrypi4-64-20250226164115.bin`,
-    but it differs between builds), which is what needs to be copied over
-    to the container.
+    `-L` argument is needed to copy underlying file instead of symlink
 
 ## The final image
 
@@ -176,14 +170,14 @@ needs to be applied:
 ```git
 root@565810a48049:/work/crosscon/CROSSCON-Hypervisor# git diff src/arch/armv8/aborts.c
 diff --git a/src/arch/armv8/aborts.c b/src/arch/armv8/aborts.c
-index a7f5adc..503dc30 100644
+index a7f5adc..90e1262 100644
 --- a/src/arch/armv8/aborts.c
 +++ b/src/arch/armv8/aborts.c
 @@ -43,6 +43,7 @@ void internal_abort_handler(uint64_t gprs[]) {
 
  void aborts_data_lower(uint64_t iss, uint64_t far, uint64_t il)
  {
-+    printk("magic printk\n");
++    printk("\x9D");
      if (!(iss & ESR_ISS_DA_ISV_BIT) || (iss & ESR_ISS_DA_FnV_BIT)) {
          ERROR("no information to handle data abort (0x%x)", far);
      }
@@ -196,7 +190,9 @@ root@565810a48049:/work/crosscon/CROSSCON-Hypervisor#
     necessary to use in order to apply this change.
 
 This additional `printk` keeps the UART output going, so that the console can
-be accessed. Right now, according to
+be accessed. `\x9D` is unprintable character and is used so it doesn't pollute
+serial output. It mostly works (sometimes you can see cursor changing position).
+Right now, according to
 [this issue](https://github.com/crosscon/CROSSCON-Hypervisor-and-TEE-Isolation-Demos/issues/8#issuecomment-2702293550)
 this is the only workaround.
 
