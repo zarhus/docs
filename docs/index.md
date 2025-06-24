@@ -40,8 +40,10 @@ Become a part of the Zarhus community:
 - **Chat with Us**: Join the conversation in the [Dasharo Matrix
   Workspace](https://matrix.to/#/#dasharo:matrix.org) where you can ask about
   the Zarhus OS, Dasharo Tools Suite, meta-rte and more!
-- **Stay Updated**: Join our quarterly [Dasharo Events related to Zarhus OS
-  elements](https://vpub.dasharo.com/) featuring:
+- **Stay Updated**: Join our quarterly live [events](https://3mdeb.com/events/)
+  featuring:
+    + **Zarhus Developers Meetup (ZDM)**: Explore the latest updates in the
+      Zarhus ecosystem.
     + **Dasharo User Group (DUG)**: A forum for Dasharo users to connect, share
       experiences, and stay informed.
     + **Dasharo Developers vPub**: A relaxed virtual meetup for developers and
