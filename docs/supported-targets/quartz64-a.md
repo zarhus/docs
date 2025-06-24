@@ -3,7 +3,7 @@
 ## Description and resources
 
 The [Quartz64 Model A](https://pine64.org/devices/quartz64_model_a/) is a SBC
-based on Rockchip RK3566 and produced by PINE64. 
+based on Rockchip RK3566 and produced by PINE64.
 
 Additional resources for the board:
 
@@ -43,5 +43,5 @@ guide.](../getting-started/building.md)
 For flashing steps check the [generic Zarhus OS SD card flashing
 guide.](../getting-started/flashing.md)
 
-You can verify the booted image by follwoing [generic Zarhus OS image
+You can verify the booted image by following [generic Zarhus OS image
 verification.](../getting-started/verification.md)
