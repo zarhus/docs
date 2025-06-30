@@ -1,93 +1,122 @@
----
 <p align="center">
-<img src="images/zarhus-logo.png" width="300" align=center/>
+  <img src="images/zarhus-logo.png" width="300" alt="Zarhus Logo" />
 </p>
+
+# Welcome to Zarhus
+
+**Zarhus** is an  embedded Linux distribution developed by
+[3mdeb](https://3mdeb.com), built on top of the [Yocto
+Project](https://www.yoctoproject.org/). It simplifies provisioning,
+integration, and maintenance of embedded platforms placing security at its core
+with strong emphasis on **Root of Trust** (RoT) and **Chain of Trust** (CoT)
+technologies. Our goal is to ensure embedded applications are deployed in
+trustworthy way.
+
 ---
 
-# Welcome to the world of Zarhus - Your Digital Chess Knight 👋
+## 🎯 Mission
 
-Inspired by the elegance and strategic prowess of the "huszár", meaning knight
-in chess (Polish: skoczek), Zarhus brings a unique blend of tradition and
-innovation to your embedded systems experience.
+* Host **vMeetups** and hands-on training to empower developers with knowledge
+of secure boot and embedded systems.
+* Help users navigate the growing complexity of modern boot chains.
+* Simplify hardware security enablement in a reproducible and transparent way.
 
-## ❓ Why choose Zarhus
+---
 
-### 🛡️ Deeper Meaning, Tactical Innovation
+## 🌅 Vision
 
-Delve into the world of chess analogies with Zarhus. Our name is more than just
-a label; it's a symbol of strategic brilliance and tactical adaptability,
-mirroring the knight's unconventional moves on the chessboard. Just as the
-knight navigates through complex scenarios, Zarhus operates seamlessly in the
-hardware integration area, showcasing adaptability and versatility.
+We envision a world where:
 
-### 💡 Innovation at Every Move
+* Systems are **secure**, **trustworthy**, and **repairable**.
+* Tools enhance **creativity** and **collaboration** without diminishing human
+purpose.
+* Communities thrive through technology that respects **freedom**,
+**simplicity**, and **digital sovereignty**.
 
-Zarhus isn't just an operating system; it's your digital chess knight, making
-moves that matter. Experience the innovation that comes with a system designed
-to adapt, secure, and conquer the complexities of the ever-evolving embedded
-solutions.
+---
 
-### 🌐 Your Digital Landscape, Secured
+## 🛠️ Strategy
 
-Just as the knight secures the chessboard, Zarhus safeguards your embedded
-systems. Navigate through the intricate ecosystem of hardware and software with
-ease, confident in the adaptability and resilience that Zarhus provides.
+To achieve this vision, Zarhus:
 
-## 🌍 Community
+* Extends core firmware components like **U-Boot**, **ARM Trusted Firmware**,
+and the **Linux Kernel** to build an auditable and reproducible Root and Chain
+of Trust.
+* Integrates advanced hardware security features: secure storage, secure
+elements, embedded TPMs (e.g., OP-TEE TPMs), encrypted root filesystems, and
+more.
+* Builds long-term maintainable tooling to support RoT and CoT.
+* Actively collaborates with like-minded communities, such as Dasharo, OpenXT,
+Qubes OS, Kicksecure, FreeBSD, OpenWRT, Debian, and Fedora.
+* Follows a **demo-driven, iterative development approach**, emphasizing
+real-world applicability and constant feedback.
+* Regularly reports progress through working demos and derivative products.
 
-Become a part of the Zarhus community:
+👉 Watch the [Welcome Presentation](https://youtu.be/F3349PVOGZY?si=z1uqlaQSQe22hoV4&t=309) from Zarhus Developers Meetup 0x1.
 
-- **Chat with Us**: Join the conversation in the [Dasharo Matrix
-  Workspace](https://matrix.to/#/#dasharo:matrix.org) where you can ask about
-  the Zarhus OS, Dasharo Tools Suite, meta-rte and more!
-- **Stay Updated**: Join our quarterly live [events](https://3mdeb.com/events/)
-  featuring:
-    + **Zarhus Developers Meetup (ZDM)**: Explore the latest updates in the
-      Zarhus ecosystem.
-    + **Dasharo User Group (DUG)**: A forum for Dasharo users to connect, share
-      experiences, and stay informed.
-    + **Dasharo Developers vPub**: A relaxed virtual meetup for developers and
-      enthusiasts to discuss, share, and connect.
+---
 
-We aim to grow this community and create dedicated social events related to
-Zarhus products in the future. Stay tuned!
+## 🧩 What's in the Name?
 
-## 👥 Our contribution
+The name **Zarhus** is an anagram of the Hungarian word _"huszár"_ a knight in
+chess and a nod to the Polish **Husaria**, renowned heavy cavalry. It
+symbolizes agility, strength, and strategy qualities we bring to embedded
+system security.
 
-Zarhus is a product developed by [3mdeb](https://github.com/3mdeb). Zarhus
-benefits from 3mdeb CI/CD, documentation and layer optimization of many embedded
-platforms maintained for years.
+---
 
-Together we contributed over **4.3k lines of code** to various embedded systems
-open-source projects and tools 🔧 we rely on to build and run Zarhus products:
+## 🌍 Join the Community
 
-- [Yocto Poky](https://git.yoctoproject.org/poky/)
-- [systemd](https://github.com/systemd/systemd)
-- [meta-openembedded](https://github.com/openembedded/meta-openembedded)
-- [openembedded-core](https://git.openembedded.org/openembedded-core)
-- [meta-riscv](https://github.com/riscv/meta-riscv)
-- [meta-swupdate](https://github.com/sbabic/meta-swupdate)
-- [SWUpdate](https://sbabic.github.io/swupdate/)
-- [meta-openwrt](https://github.com/kraj/meta-openwrt)
-- [meta-virtualization](https://git.yoctoproject.org/meta-virtualization/)
-- [meta-security](https://git.yoctoproject.org/meta-security/)
-- [meta-measured](https://github.com/flihp/meta-measured)
-- [meta-webkit](https://github.com/Igalia/meta-webkit)
+Be part of Zarhus and contribute to a growing ecosystem:
 
-We also maintain 🧙‍♂️ our own forks and open-source projects like:
+* **💬 Chat with us**: Join the [Zarhus Matrix
+Workspace](https://matrix.to/#/#zarhus:matrix.org) to discuss Zarhus OS,
+Dasharo Tools Suite, `meta-rte`, and more.
+* **📅 Attend events**: Join our quarterly [Zarhus Developers Meetup
+(ZDM)](https://3mdeb.com/events/) for updates, demos, and discussions around
+the Zarhus ecosystem.
 
-- [meta-dts](https://github.com/Dasharo/meta-dts)
-- [meta-rte](https://github.com/3mdeb/meta-rte)
-- [meta-fdo](https://github.com/3mdeb/meta-fdo)
-- [meta-balena-engine](https://github.com/3mdeb/meta-balena-engine)
-- [meta-trenchboot](https://github.com/3mdeb/meta-trenchboot)
-- [meta-pcengines](https://github.com/3mdeb/meta-pcengines)
+We are continuously growing and plan to introduce dedicated social events and
+community spaces—stay tuned!
 
-Zarhus public roadmap can be found
-[here](https://github.com/zarhus/zarhus-issues/milestones).
+---
 
-<!-- ^TBD: check links after roadmap finalization -->
+## 👥 Our Contribution
 
-## 📘 How to contribute
+**Zarhus** is proudly developed by [3mdeb](https://github.com/3mdeb),
+leveraging years of experience in embedded systems, CI/CD, documentation, and
+Yocto layer optimization.
 
-Please start in the [newcomer](newcomers.md) section.
+We’ve contributed **4,300+ lines of code** to upstream open-source projects
+essential to Zarhus:
+
+* [Yocto Poky](https://git.yoctoproject.org/poky/)
+* [systemd](https://github.com/systemd/systemd)
+* [meta-openembedded](https://github.com/openembedded/meta-openembedded)
+* [meta-riscv](https://github.com/riscv/meta-riscv)
+* [meta-swupdate](https://github.com/sbabic/meta-swupdate)
+* [meta-openwrt](https://github.com/kraj/meta-openwrt)
+* [meta-security](https://git.yoctoproject.org/meta-security/)
+* [meta-virtualization](https://git.yoctoproject.org/meta-virtualization/)
+* and more…
+
+We also maintain our own open-source layers and tools, including:
+
+* [meta-dts](https://github.com/Dasharo/meta-dts)
+* [meta-rte](https://github.com/3mdeb/meta-rte)
+* [meta-fdo](https://github.com/3mdeb/meta-fdo)
+* [meta-balena-engine](https://github.com/3mdeb/meta-balena-engine)
+* [meta-trenchboot](https://github.com/3mdeb/meta-trenchboot)
+* [meta-pcengines](https://github.com/3mdeb/meta-pcengines)
+
+📍 Check out the [Zarhus public roadmap](https://github.com/zarhus/zarhus-issues/milestones) to track our progress and plans.
+
+---
+
+## 🤝 How to Contribute
+
+We welcome contributors of all experience levels! Start with our [Newcomer
+Guide](newcomers.md) to get up to speed.
+
+Whether you're interested in improving documentation, contributing code, or
+testing new features, there's a place for you in the Zarhus community.
