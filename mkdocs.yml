@@ -59,6 +59,7 @@ markdown_extensions:
 
 plugins:
   - search
+  - macros
   - mkdocs-video
 
 nav:

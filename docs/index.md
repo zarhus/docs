@@ -79,6 +79,9 @@ the Zarhus ecosystem.
 We are continuously growing and plan to introduce dedicated social events and
 community spaces—stay tuned!
 
+{{ subscribe_form("69962d05-47bb-4fff-a0c2-7355b876fd08",
+"Subscribe to Zarhus Newsletter") }}
+
 ---
 
 ## 👥 Our Contribution
