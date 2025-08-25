@@ -92,3 +92,20 @@ Embedding videos with in-line HTML `iframe` tag does not work.
 [mkdocs-video](https://github.com/soulless-viewer/mkdocs-video) plugin is used
 instead. To embed an video simply type the following in markdown:
 `![type:video](https://www.youtube.com/embed/LXb3EKWsInQ)` (example).
+
+### Embedding subscribe forms
+
+It is possible to embed subscribe form for the selfhosted Listmonk mailing
+lists. To do that, paste the custom macro content in the target markdown file:
+
+```md
+{{ subscribe_form("FORM-ID",
+"Button text") }}
+```
+
+where:
+
+- `FORM-ID` - target mailing list form ID that can be found [here][lm-forms].
+- `Button text` - text to be shown on the button.
+
+[lm-forms]: https://github.com/3mdeb/3mdeb-website/tree/main/static/subscribe
