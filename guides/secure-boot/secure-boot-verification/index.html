@@ -1,0 +1,2282 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.zarhus.com/guides/secure-boot/secure-boot-verification/">
+      
+      
+        <link rel="prev" href="../../managing-layers/">
+      
+      
+        <link rel="next" href="../../rpi4-crosscon-hypervisor/">
+      
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+    
+    
+      
+        <title>Secure Boot Verification - Zarhus Universe</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.50c56a3b.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","TBD"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","TBD",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=TBD",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#verifying-secure-boot" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Zarhus Universe" class="md-header__button md-logo" aria-label="Zarhus Universe" data-md-component="logo">
+      
+  <img src="../../../images/zarhus-logo-white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Zarhus Universe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Secure Boot Verification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/zarhus/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  Intro
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../getting-started/building/" class="md-tabs__link">
+          
+  
+  Getting started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../supported-targets/targets/" class="md-tabs__link">
+          
+  
+  Supported targets
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../managing-packages/" class="md-tabs__link">
+          
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../development-process/standard-release-process/" class="md-tabs__link">
+          
+  
+  Development Process
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../faq/" class="md-tabs__link">
+        
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Zarhus Universe" class="md-nav__button md-logo" aria-label="Zarhus Universe" data-md-component="logo">
+      
+  <img src="../../../images/zarhus-logo-white.png" alt="logo">
+
+    </a>
+    Zarhus Universe
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/zarhus/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Intro
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About Zarhus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../newcomers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    New? Start here
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Getting started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/verification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Supported targets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Supported targets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../supported-targets/targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Radxa
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Radxa
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../supported-targets/radxa-cm3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Radxa CM3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Raspberry Pi
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Raspberry Pi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../supported-targets/rpi4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Raspberry Pi 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    PINE64
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            PINE64
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../supported-targets/quartz64-a/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quartz64 Model A
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Guides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../managing-packages/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Managing packages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../managing-layers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Managing layers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Secure Boot Verification
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Secure Boot Verification
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB drive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sbo002001-secure-boot-can-be-enabled-from-boot-menu-and-is-seen-from-os" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO002.001 Secure Boot can be enabled from boot menu and is seen from OS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo003001-attempt-to-boot-file-signed-with-the-correct-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO003.001 Attempt to boot file signed with the correct key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo004001-attempt-to-boot-unsigned-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO004.001 Attempt to boot unsigned file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo006001-reset-secure-boot-keys-option-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO006.001 Reset Secure Boot Keys option availability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo007001-attempt-to-boot-the-file-after-restoring-keys-to-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO007.001 Attempt to boot the file after restoring keys to default
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo008001-attempt-to-enroll-the-key-in-the-incorrect-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO008.001 Attempt to enroll the key in the incorrect format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo009001-attempt-to-boot-file-signed-for-intermediate-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO009.001 Attempt to boot file signed for intermediate certificate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010001-check-support-for-rsa2k-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.001 Check support for rsa2k signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010002-check-support-for-rsa3k-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.002 Check support for rsa3k signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010003-check-support-for-rsa4k-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.003 Check support for rsa4k signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010004-check-support-for-ecdsa256-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.004 Check support for ecdsa256 signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010005-check-support-for-ecdsa384-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.005 Check support for ecdsa384 signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010006-check-support-for-ecdsa521-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.006 Check support for ecdsa521 signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo011001-attempt-to-enroll-expired-certificate-and-boot-signed-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO011.001 Attempt to enroll expired certificate and boot signed image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo014001-enroll-certificates-using-sbctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO014.001 Enroll certificates using sbctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo012001-boot-os-signed-and-enrolled-from-inside-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO012.001 Boot OS Signed And Enrolled From Inside System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo015001-attempt-to-enroll-the-key-in-the-incorrect-format-with-sbctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO015.001 Attempt to enroll the key in the incorrect format with sbctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo013001-check-automatic-certificate-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO013.001 Check automatic certificate provisioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo013002-check-automatic-certificate-provisioning-kek-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO013.002 Check automatic certificate provisioning KEK certificate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rpi4-crosscon-hypervisor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zarhus OS on CROSSCON Hypervisor on RPi 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Development Process
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Development Process
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development-process/standard-release-process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standard Release Process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB drive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sbo002001-secure-boot-can-be-enabled-from-boot-menu-and-is-seen-from-os" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO002.001 Secure Boot can be enabled from boot menu and is seen from OS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo003001-attempt-to-boot-file-signed-with-the-correct-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO003.001 Attempt to boot file signed with the correct key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo004001-attempt-to-boot-unsigned-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO004.001 Attempt to boot unsigned file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo006001-reset-secure-boot-keys-option-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO006.001 Reset Secure Boot Keys option availability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo007001-attempt-to-boot-the-file-after-restoring-keys-to-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO007.001 Attempt to boot the file after restoring keys to default
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo008001-attempt-to-enroll-the-key-in-the-incorrect-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO008.001 Attempt to enroll the key in the incorrect format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo009001-attempt-to-boot-file-signed-for-intermediate-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO009.001 Attempt to boot file signed for intermediate certificate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010001-check-support-for-rsa2k-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.001 Check support for rsa2k signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010002-check-support-for-rsa3k-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.002 Check support for rsa3k signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010003-check-support-for-rsa4k-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.003 Check support for rsa4k signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010004-check-support-for-ecdsa256-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.004 Check support for ecdsa256 signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010005-check-support-for-ecdsa384-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.005 Check support for ecdsa384 signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo010006-check-support-for-ecdsa521-signed-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO010.006 Check support for ecdsa521 signed certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo011001-attempt-to-enroll-expired-certificate-and-boot-signed-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO011.001 Attempt to enroll expired certificate and boot signed image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo014001-enroll-certificates-using-sbctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO014.001 Enroll certificates using sbctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo012001-boot-os-signed-and-enrolled-from-inside-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO012.001 Boot OS Signed And Enrolled From Inside System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo015001-attempt-to-enroll-the-key-in-the-incorrect-format-with-sbctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO015.001 Attempt to enroll the key in the incorrect format with sbctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo013001-check-automatic-certificate-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO013.001 Check automatic certificate provisioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbo013002-check-automatic-certificate-provisioning-kek-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBO013.002 Check automatic certificate provisioning KEK certificate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/zarhus/docs/blob/main/docs/guides/secure-boot/secure-boot-verification.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/zarhus/docs/raw/main/docs/guides/secure-boot/secure-boot-verification.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="verifying-secure-boot">Verifying Secure Boot</h1>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Restore BIOS to defaults.
+    <!--
+    Does it also restore SB keys?
+    if not then SBO006.001 + restore should probably be first test so we start
+    from known state
+    --></li>
+<li>
+<p>Attached USB drive prepared in <a href="#usb-drive">USB drive</a> section</p>
+<ul>
+<li>If using QEMU <code>tests.img</code> can be attached directly e.g. via adding
+    <code>-drive if=ide,file=tests.img</code> argument to <code>qemu</code> command</li>
+</ul>
+</li>
+<li>
+<p>Before starting tests please boot to OS on machine to be tested, mount
+    USB drive and run <code>add-boot-options.sh</code> script. It should add all <code>.efi</code>
+    files to boot options</p>
+</li>
+</ul>
+<h3 id="usb-drive">USB drive</h3>
+<ol>
+<li>Download <a href="../generate-image.sh">generate-image.sh</a></li>
+<li>Build <a href="#lockdownefi">LockDown.efi</a> file</li>
+<li>Build <a href="#helloefi">hello.efi</a> file</li>
+<li>Run <code>generate-image.sh</code> script. It'll generate <code>tests.img</code> file containing
+needed files and certificates</li>
+<li>Flash this file to USB drive</li>
+</ol>
+<h4 id="lockdownefi">LockDown.efi</h4>
+<p><strong>Dependencies</strong></p>
+<ul>
+<li><a href="https://docs.dasharo.com/dasharo-tools-suite/documentation/building/#prerequisites">kas-container</a></li>
+<li><a href="https://git-scm.com/">git</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li>
+<p>Clone and checkout tag <code>v1.2.23</code></p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>--branch<span class="w"> </span>v1.2.23<span class="w"> </span>https://github.com/Dasharo/meta-dts.git
+</code></pre></div>
+</li>
+<li>
+<p>Build <code>efitools</code> recipe which will build <code>LockDown.efi</code> with sample keys</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SHELL</span><span class="o">=</span>/bin/bash<span class="w"> </span>kas-container<span class="w"> </span>shell<span class="w"> </span>meta-dts/kas-uefi-sb.yml<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;bitbake efitools&quot;</span><span class="sb">`</span>
+</code></pre></div>
+</li>
+<li>
+<p>Copy <code>LockDown.efi</code> to directory containing <code>generate-image.sh</code> script.</br>
+File should be inside <code>build/tmp/deploy/images/genericx86_64</code> directory.</br>
+Sample keys and certificates used in <code>LockDown.efi</code> can be viewed in
+<code>build/tmp/deploy/images/genericx86_64/sample-keys/uefi_sb_keys</code></p>
+</li>
+</ol>
+<h4 id="helloefi">hello.efi</h4>
+<p><strong>Dependencies</strong></p>
+<ul>
+<li><a href="https://docs.docker.com/engine/install/">Docker</a></li>
+<li><a href="https://git-scm.com/">git</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li>
+<p>Pull docker image that'll contain tools needed to build <code>hello.efi</code>
+<a href="https://github.com/tianocore/containers?tab=readme-ov-file#Current-Status">https://github.com/tianocore/containers?tab=readme-ov-file#Current-Status</a>.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/tianocore/containers/fedora-39-build:46802aa
+</code></pre></div>
+</li>
+<li>
+<p>Get source code for EDK2</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>--recurse-submodules<span class="w"> </span>--shallow-submodules<span class="w"> </span>--branch<span class="w"> </span>edk2-stable202408<span class="w"> </span>https://github.com/tianocore/edk2.git
+</code></pre></div>
+</li>
+<li>
+<p>Add sleep (in this case 2 seconds) to <code>HelloWorld.c</code> otherwise output will
+disappear too fast for human to see</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>edk2
+git<span class="w"> </span>apply<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">diff --git a/MdeModulePkg/Application/HelloWorld/HelloWorld.c b/MdeModulePkg/Application/HelloWorld/HelloWorld.c</span>
+<span class="s">index 9b77046e561c..ebd4ad9d6a79 100644</span>
+<span class="s">--- a/MdeModulePkg/Application/HelloWorld/HelloWorld.c</span>
+<span class="s">+++ b/MdeModulePkg/Application/HelloWorld/HelloWorld.c</span>
+<span class="s">@@ -56,5 +56,6 @@ UefiMain (</span>
+<span class="s">     }</span>
+<span class="s">   }</span>
+
+<span class="s">+  SystemTable-&gt;BootServices-&gt;Stall(2000000);</span>
+<span class="s">   return EFI_SUCCESS;</span>
+<span class="s"> }</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</li>
+<li>
+<p>Build <code>HelloWorld.efi</code></p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/edk2<span class="w"> </span>-w<span class="w"> </span>/edk2<span class="w"> </span>--entrypoint<span class="w"> </span>bash<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ghcr.io/tianocore/containers/fedora-39-build:46802aa<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39; \</span>
+<span class="s1">        source edksetup.sh &amp;&amp; make -C BaseTools &amp;&amp; build -a X64 -t GCC5 \</span>
+<span class="s1">            -p MdeModulePkg/MdeModulePkg.dsc \</span>
+<span class="s1">            -m MdeModulePkg/Application/HelloWorld/HelloWorld.inf -b RELEASE&#39;</span>
+</code></pre></div>
+<p>Build should complete with</p>
+<div class="highlight"><pre><span></span><code>(...)
+- Done -
+Build end time: 12:51:06, Oct.04 2024
+Build total time: 00:00:06
+</code></pre></div>
+</li>
+<li>
+<p>Copy built <code>HelloWorld.efi</code> file to directory with <code>generate-image.sh</code> and
+rename it to <code>hello.efi</code></p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>Build/MdeModule/RELEASE_GCC5/X64/HelloWorld.efi<span class="w"> </span>&lt;replace/this/path/&gt;hello.efi
+</code></pre></div>
+</li>
+</ol>
+<h4 id="usb-directory-layout">USB directory layout</h4>
+<div class="highlight"><pre><span></span><code>.
+├── add-boot-options.sh
+├── SBO003.001
+│   ├── cert.der
+│   └── hello.efi
+├── SBO004.001
+│   ├── cert.der
+│   └── hello.efi
+├── SBO008.001
+│   ├── cert.der
+│   └── hello.efi
+├── SBO009.001
+│   ├── cert.der
+│   └── hello.efi
+├── SBO010.001
+│   ├── cert.der
+│   └── hello.efi
+├── SBO010.002
+│   ├── cert.der
+│   └── hello.efi
+├── SBO010.003
+│   ├── cert.der
+│   └── hello.efi
+├── SBO010.004
+│   ├── cert.der
+│   └── hello.efi
+├── SBO010.005
+│   ├── cert.der
+│   └── hello.efi
+├── SBO010.006
+│   ├── cert.der
+│   └── hello.efi
+├── SBO011.001
+│   ├── cert.der
+│   └── hello.efi
+├── SBO013.001
+│   ├── hello.efi
+│   └── LockDown.efi
+└── SBO013.002
+    └── KEK.crt
+
+14 directories, 26 files
+</code></pre></div>
+<h2 id="tests">Tests</h2>
+<p>On ODROID-H4, BIOS version ADLN-H4 1.05 there is a weird quirk in when you can
+edit SB settings (e.g. state, adding certificates or restoring to default).
+It's described in more details on
+<a href="https://forum.odroid.com/viewtopic.php?f=173&amp;t=49144">ODROID forum</a>.
+Due to that you should reboot platform before each test.</p>
+<!-- more on https://forum.odroid.com/viewtopic.php?f=173&t=49144 -->
+
+<h3 id="sbo002001-secure-boot-can-be-enabled-from-boot-menu-and-is-seen-from-os">SBO002.001 Secure Boot can be enabled from boot menu and is seen from OS</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that Secure Boot can be enabled from the boot menu and, after
+the platform reset, it is seen from the OS.</p>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enable Secure Boot</a></li>
+<li>Save changes and reboot platform</li>
+<li>Boot and log into OS</li>
+<li>
+<p>Enter the following command and note the output</p>
+<div class="highlight"><pre><span></span><code>dmesg<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Secure boot&quot;</span>
+</code></pre></div>
+</li>
+</ol>
+<p><strong>Expected result</strong>:</p>
+<div class="highlight"><pre><span></span><code>secureboot: Secure boot enabled
+</code></pre></div>
+<!--
+    Another way:
+
+    <div class="highlight"><pre><span></span><code>mokutil<span class="w"> </span>--sb-state
+SecureBoot<span class="w"> </span>enabled
+</code></pre></div>
+-->
+
+<h3 id="sbo003001-attempt-to-boot-file-signed-with-the-correct-key">SBO003.001 Attempt to boot file signed with the correct key</h3>
+<!--
+Maybe add test before this one, that checks that file won't boot before adding
+certificate
+-->
+
+<p><strong>Description</strong></p>
+<p>This test verifies that Secure Boot allows booting a signed file with a correct
+key.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO003.001/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO003.001/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo004001-attempt-to-boot-unsigned-file">SBO004.001 Attempt to boot unsigned file</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that Secure Boot blocks booting unsigned file.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO004.001/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Booting file should fail with Secure Boot error e.g.:</p>
+<div class="highlight"><pre><span></span><code>/---------- Secure Boot Violation ----------\
+|                                           |
+| Invalid signature detected. Check Secure  |
+|           Boot Policy in Setup            |
+|                                           |
+|-------------------------------------------|
+|                    Ok                     |
+\-------------------------------------------/
+</code></pre></div>
+<h3 id="sbo006001-reset-secure-boot-keys-option-availability">SBO006.001 Reset Secure Boot Keys option availability</h3>
+<p><strong>Description</strong></p>
+<p>This test aims to verify, that the Reset Secure Boot Keys option is available</p>
+<p><strong>Prerequisites</strong></p>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#enter-secure-boot-key-management-menu">Enter Secure Boot key management menu</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Option to restore SB keys should be available e.g.</p>
+<div class="highlight"><pre><span></span><code>Restore Factory Keys
+</code></pre></div>
+<h3 id="sbo007001-attempt-to-boot-the-file-after-restoring-keys-to-default">SBO007.001 Attempt to boot the file after restoring keys to default</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that the Reset Secure Boot Keys option works correctly.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="#sbo003001-attempt-to-boot-file-signed-with-the-correct-key">SBO003.001</a>
+    succeeded</li>
+<li><a href="#sbo006001-reset-secure-boot-keys-option-availability">SBO006.001</a>
+    succeeded</li>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#enter-secure-boot-key-management-menu">Enter Secure Boot key management menu</a></li>
+<li>Select option to restore Secure Boot keys e.g. <code>Restore Factory Keys</code>
+and accept</li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO003.001/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Booting file should fail with Secure Boot error e.g.:</p>
+<div class="highlight"><pre><span></span><code>/---------- Secure Boot Violation ----------\
+|                                           |
+| Invalid signature detected. Check Secure  |
+|           Boot Policy in Setup            |
+|                                           |
+|-------------------------------------------|
+|                    Ok                     |
+\-------------------------------------------/
+</code></pre></div>
+<h3 id="sbo008001-attempt-to-enroll-the-key-in-the-incorrect-format">SBO008.001 Attempt to enroll the key in the incorrect format</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that Secure Boot doesn't allow enrolling keys in the
+incorrect format</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO008.001/cert.der to DB</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Adding certificate should end in failure e.g.</p>
+<div class="highlight"><pre><span></span><code>┌── Append  ───┐
+│              │
+│    Failed    │
+│              │
+├──────────────┤
+│      Ok      │
+└──────────────┘
+</code></pre></div>
+<h3 id="sbo009001-attempt-to-boot-file-signed-for-intermediate-certificate">SBO009.001 Attempt to boot file signed for intermediate certificate</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that a file signed with an intermediate certificate can be
+executed.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO009.001/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO009.001/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo010001-check-support-for-rsa2k-signed-certificates">SBO010.001 Check support for rsa2k signed certificates</h3>
+<!-- we can probably skip this one as it's identical to SBO003.001 -->
+
+<p><strong>Description</strong></p>
+<p>This test verifies that a Secure Boot supports RSA2048 signed certificate and
+can boot file signed with this certificate.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO010.001/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO010.001/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo010002-check-support-for-rsa3k-signed-certificates">SBO010.002 Check support for rsa3k signed certificates</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that a Secure Boot supports RSA3072 signed certificate and
+can boot file signed with this certificate.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO010.002/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO010.002/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo010003-check-support-for-rsa4k-signed-certificates">SBO010.003 Check support for rsa4k signed certificates</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that a Secure Boot supports RSA4096 signed certificate and
+can boot file signed with this certificate.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO010.003/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO010.003/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo010004-check-support-for-ecdsa256-signed-certificates">SBO010.004 Check support for ecdsa256 signed certificates</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that a Secure Boot supports ESCDA256 signed certificate and
+can boot file signed with this certificate.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO010.004/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO010.004/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo010005-check-support-for-ecdsa384-signed-certificates">SBO010.005 Check support for ecdsa384 signed certificates</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that a Secure Boot supports ESCDA384 signed certificate and
+can boot file signed with this certificate.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO010.005/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO010.005/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo010006-check-support-for-ecdsa521-signed-certificates">SBO010.006 Check support for ecdsa521 signed certificates</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that a Secure Boot supports ESCDA521 signed certificate and
+can boot file signed with this certificate.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO010.006/cert.der to DB</a></li>
+<li>Save changes and reboot platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO010.006/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo011001-attempt-to-enroll-expired-certificate-and-boot-signed-image">SBO011.001 Attempt to enroll expired certificate and boot signed image</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that an expired certificate cannot be used to boot image</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enabled Secure Boot</a></li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#add-secure-boot-certificate">Add SBO011.001/cert.der to DB</a></li>
+<li>Save changes and reboot</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO011.001/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Booting file should fail with Secure Boot error e.g.:</p>
+<div class="highlight"><pre><span></span><code>/---------- Secure Boot Violation ----------\
+|                                           |
+| Invalid signature detected. Check Secure  |
+|           Boot Policy in Setup            |
+|                                           |
+|-------------------------------------------|
+|                    Ok                     |
+\-------------------------------------------/
+</code></pre></div>
+<h3 id="sbo014001-enroll-certificates-using-sbctl">SBO014.001 Enroll certificates using sbctl</h3>
+<p><strong>Description</strong></p>
+<p>This test erases Secure Boot keys from the BIOS menu and verifies if new keys
+can be enrolled from the operating system using sbctl.</p>
+<!--
+Changed this test a little because, based on original steps, test verified
+that you can't boot OS after erasing SB keys and enrolling different ones.
+If we want to verify that we can enroll keys from operating system then we
+should `sbctl enroll-keys` followed by checking if those keys are visible from
+BIOS. On Dasharo we can check PKCS7_GUID of KEK and DB (but not PK).
+-->
+
+<p><strong>Prerequisites</strong></p>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#disable-secure-boot">Disable Secure Boot</a></li>
+<li>If applicable disable key provisioning (e.g. AMI BIOS)</li>
+<li><a href="../secure-boot-bios/#remove-all-secure-boot-keys">Remove Secure Boot keys</a></li>
+<li>Save changes and restart platform</li>
+<li>Boot and log into OS</li>
+<li>
+<p>Remove old Secure Boot keys</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/share/secureboot
+</code></pre></div>
+</li>
+<li>
+<p>Generate new Secure Boot keys</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sbctl<span class="w"> </span>create-keys
+Created<span class="w"> </span>Owner<span class="w"> </span>UUID<span class="w"> </span>2a602183-aee8-4998-a313-25635405d554
+Creating<span class="w"> </span>secure<span class="w"> </span>boot<span class="w"> </span>keys...✓
+Secure<span class="w"> </span>boot<span class="w"> </span>keys<span class="w"> </span>created!
+</code></pre></div>
+</li>
+<li>
+<p>Enroll generated Secure Boot keys</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sbctl<span class="w"> </span>enroll-keys<span class="w"> </span>--yes-this-might-brick-my-machine
+Enrolling<span class="w"> </span>keys<span class="w"> </span>to<span class="w"> </span>EFI<span class="w"> </span>variables...✓
+Enrolled<span class="w"> </span>keys<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>EFI<span class="w"> </span>variables!
+</code></pre></div>
+</li>
+<li>
+<p>Reboot platform</p>
+</li>
+<li><a href="../secure-boot-bios/#enter-secure-boot-key-management-menu">Enter Secure Boot key management menu</a></li>
+<li><a href="../secure-boot-bios/#check-enrolled-keys">Check enrolled KEK GUID</a></li>
+<li><a href="../secure-boot-bios/#check-enrolled-keys">Check enrolled DB GUID</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>KEK and DB keys should have the same GUID as returned by <code>sbctl create-keys</code>
+command e.g. <code>2a602183-aee8-4998-a313-25635405d554</code></p>
+<h3 id="sbo012001-boot-os-signed-and-enrolled-from-inside-system">SBO012.001 Boot OS Signed And Enrolled From Inside System</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that OS boots after enrolling keys and signing system from
+inside OS.</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="#sbo014001-enroll-certificates-using-sbctl">SBO014.001</a> succeeded</li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li>Boot and log into OS</li>
+<li>
+<p>Sign all components</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sbctl<span class="w"> </span>verify<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n+2<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-I<span class="w"> </span>@<span class="w"> </span>sbctl<span class="w"> </span>sign<span class="w"> </span><span class="s2">&quot;@&quot;</span>
+✓<span class="w"> </span>Signed<span class="w"> </span>/boot/efi/EFI/BOOT/BOOTX64.EFI
+✓<span class="w"> </span>Signed<span class="w"> </span>/boot/efi/EFI/BOOT/fbx64.efi
+✓<span class="w"> </span>Signed<span class="w"> </span>/boot/efi/EFI/BOOT/mmx64.efi
+✓<span class="w"> </span>Signed<span class="w"> </span>/boot/efi/EFI/ubuntu/grubx64.efi
+✓<span class="w"> </span>Signed<span class="w"> </span>/boot/efi/EFI/ubuntu/mmx64.efi
+✓<span class="w"> </span>Signed<span class="w"> </span>/boot/efi/EFI/ubuntu/shimx64.efi
+</code></pre></div>
+</li>
+<li>
+<p>Reboot platform</p>
+</li>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enable Secure Boot</a></li>
+<li>Save changes and restart platform</li>
+<li>Boot and log into OS</li>
+<li>
+<p>Verify that Secure Boot is enabled</p>
+<div class="highlight"><pre><span></span><code>dmesg<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Secure boot&quot;</span>
+</code></pre></div>
+</li>
+</ol>
+<p><strong>Expected result</strong></p>
+<div class="highlight"><pre><span></span><code>secureboot: Secure boot enabled
+</code></pre></div>
+<!--
+    Another way:
+
+    <div class="highlight"><pre><span></span><code>mokutil<span class="w"> </span>--sb-state
+SecureBoot<span class="w"> </span>enabled
+</code></pre></div>
+-->
+
+<h3 id="sbo015001-attempt-to-enroll-the-key-in-the-incorrect-format-with-sbctl">SBO015.001 Attempt to enroll the key in the incorrect format with sbctl</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that it is impossible to load a certificate in the wrong file
+format from the operating system while using sbctl.</p>
+<p><strong>Prerequisites</strong></p>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#disable-secure-boot">Disable Secure Boot</a></li>
+<li>If applicable disable key provisioning (e.g. AMI BIOS)</li>
+<li><a href="../secure-boot-bios/#remove-all-secure-boot-keys">Remove Secure Boot keys</a></li>
+<li>Save changes and restart platform</li>
+<li>Boot and log into OS</li>
+<li>
+<p>Remove old Secure Boot keys</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/share/secureboot
+</code></pre></div>
+</li>
+<li>
+<p>Generate new Secure Boot keys</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sbctl<span class="w"> </span>create-keys
+Created<span class="w"> </span>Owner<span class="w"> </span>UUID<span class="w"> </span>2a602183-aee8-4998-a313-25635405d554
+Creating<span class="w"> </span>secure<span class="w"> </span>boot<span class="w"> </span>keys...✓
+Secure<span class="w"> </span>boot<span class="w"> </span>keys<span class="w"> </span>created!
+</code></pre></div>
+</li>
+<li>
+<p>Generate keys with wrong format and move them to correct location</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>ecparam<span class="w"> </span>-genkey<span class="w"> </span>-name<span class="w"> </span>secp384r1<span class="w"> </span>-out<span class="w"> </span>db.key<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-key<span class="w"> </span>db.key<span class="w"> </span>-out<span class="w"> </span>db.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=test&quot;</span>
+openssl<span class="w"> </span>ecparam<span class="w"> </span>-genkey<span class="w"> </span>-name<span class="w"> </span>secp384r1<span class="w"> </span>-out<span class="w"> </span>PK.key<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-key<span class="w"> </span>PK.key<span class="w"> </span>-out<span class="w"> </span>PK.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=test&quot;</span>
+openssl<span class="w"> </span>ecparam<span class="w"> </span>-genkey<span class="w"> </span>-name<span class="w"> </span>secp384r1<span class="w"> </span>-out<span class="w"> </span>KEK.key<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-key<span class="w"> </span>KEK.key<span class="w"> </span>-out<span class="w"> </span>KEK.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=test&quot;</span>
+mv<span class="w"> </span>db.key<span class="w"> </span>/usr/share/secureboot/keys/db/
+mv<span class="w"> </span>PK.key<span class="w"> </span>/usr/share/secureboot/keys/PK/
+mv<span class="w"> </span>KEK.key<span class="w"> </span>/usr/share/secureboot/keys/KEK/
+</code></pre></div>
+</li>
+<li>
+<p>Enroll generated Secure Boot keys</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sbctl<span class="w"> </span>enroll-keys<span class="w"> </span>--yes-this-might-brick-my-machine
+</code></pre></div>
+</li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p><code>sbctl</code> should fail to enroll keys</p>
+<div class="highlight"><pre><span></span><code>couldn&#39;t sync keys
+</code></pre></div>
+<h3 id="sbo013001-check-automatic-certificate-provisioning">SBO013.001 Check automatic certificate provisioning</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that the automatic certificate provisioning will install
+custom keys which will allow booting signed <code>hello.efi</code> file</p>
+<!--
+Fix description in Dasharo docs? There the test conclusion is 'which will make
+Ubuntu unbootable` which doesn't happen due to automatic certificate
+provisioning but due to erasing all secure boot keys
+-->
+
+<p><strong>Prerequisites</strong></p>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#disable-secure-boot">Disable Secure Boot</a></li>
+<li>If applicable disable key provisioning (e.g. AMI BIOS)</li>
+<li><a href="../secure-boot-bios/#remove-all-secure-boot-keys">Remove Secure Boot keys</a></li>
+<li>Save changes and restart platform</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO013.001/LockDown.efi file</a></li>
+<li>Wait until platform reboots automatically</li>
+<li><a href="../secure-boot-bios/#enable-secure-boot">Enable Secure Boot</a></li>
+<li>Save changes and restart</li>
+<li><a href="../secure-boot-bios/#boot-efi-file">Boot SBO013.001/hello.efi file</a></li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>Screen should show:</p>
+<div class="highlight"><pre><span></span><code>Hello, world!
+</code></pre></div>
+<h3 id="sbo013002-check-automatic-certificate-provisioning-kek-certificate">SBO013.002 Check automatic certificate provisioning KEK certificate</h3>
+<p><strong>Description</strong></p>
+<p>This test verifies that automatic certificate provisioning installed expected
+KEK certificate</p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li><a href="#sbo013001-check-automatic-certificate-provisioning">SBO013.001</a> succeeded</li>
+</ul>
+<p><strong>Steps</strong></p>
+<ol>
+<li><a href="../secure-boot-bios/#disable-secure-boot">Disable Secure Boot</a></li>
+<li>Save changes and restart platform.</li>
+<li>Boot and log into OS</li>
+<li>Mount USB drive with tests if it wasn't mounted automatically</li>
+<li>
+<p>Export currently enrolled certificate</p>
+<div class="highlight"><pre><span></span><code>mokutil<span class="w"> </span>--kek<span class="w"> </span>&gt;<span class="w"> </span>current_certificate.crt
+</code></pre></div>
+</li>
+<li>
+<p>Compare current KEK certificate with one that should be enrolled.
+Replace <code>&lt;usb/mount&gt;</code> with path to where USB drive is mounted.</p>
+<div class="highlight"><pre><span></span><code>diff<span class="w"> </span>&lt;usb/mount&gt;/SBO013.002/KEK.crt<span class="w"> </span>current_certificate.crt<span class="w"> </span>--color<span class="o">=</span>always
+</code></pre></div>
+</li>
+</ol>
+<p><strong>Expected result</strong></p>
+<p>No output or slight format differences e.g.</p>
+<div class="highlight"><pre><span></span><code><span class="gu">1c1,2</span>
+<span class="gd">&lt; SHA1 Fingerprint=EA:EF:F4:8A:C2:38:CB:31:98:FD:45:81:6D:64:99:78:61:BB:B7:0C</span>
+<span class="gs">---</span>
+<span class="gi">&gt; [key 1]</span>
+<span class="gi">&gt; SHA1 Fingerprint: ea:ef:f4:8a:c2:38:cb:31:98:fd:45:81:6d:64:99:78:61:bb:b7:0c</span>
+<span class="gu">8c9</span>
+<span class="gd">&lt;         Issuer: CN = KEK Certificate</span>
+<span class="gs">---</span>
+<span class="gi">&gt;         Issuer: CN=KEK Certificate</span>
+12c13
+<span class="gd">&lt;         Subject: CN = KEK Certificate</span>
+<span class="gs">---</span>
+<span class="gi">&gt;         Subject: CN=KEK Certificate</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/zarhus" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit", "content.action.view", "content.tabs.link", "content.code.copy", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+    
+  </body>
+</html>
