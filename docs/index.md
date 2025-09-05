@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/zarhus-logo.png" width="300" alt="Zarhus Logo" />
+  <img src="images/zarhus-logo-new.png" width="400" alt="Zarhus Logo" />
 </p>
 
 # Welcome to Zarhus
