@@ -70,7 +70,7 @@ system security.
 Be part of Zarhus and contribute to a growing ecosystem:
 
 * **💬 Chat with us**: Join the [Zarhus Matrix
-Workspace](https://matrix.to/#/#zarhus:matrix.org) to discuss Zarhus OS,
+Workspace](https://matrix.to/#/#zarhus:matrix.3mdeb.com) to discuss Zarhus OS,
 Dasharo Tools Suite, `meta-rte`, and more.
 * **📅 Attend events**: Join our quarterly [Zarhus Developers Meetup
 (ZDM)](https://3mdeb.com/events/) for updates, demos, and discussions around
