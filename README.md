@@ -10,7 +10,7 @@ merge request.
 ### Local build
 
 ```shell
-virtualenv -p $(which python3) venv
+python3 -m venv scripts/venv
 source venv/bin/activate
 pip install -r requirements.txt
 mkdocs serve
