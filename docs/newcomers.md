@@ -7,7 +7,7 @@ operating system and possibly contributing to making it better.
 
 If you have no prior experience with [Yocto Project][Y1], it's highly
 recommended to visit official documentation for [Yocto Project Quick Start][Y2]
-or choose one of our [Pace Enterpraise Training][Y3] courses focused on Embedded
+or choose one of our [Pace Enterprise Training][Y3] courses focused on Embedded
 Linux and Yocto Project development.
 
 [Y1]: https://www.yoctoproject.org/
