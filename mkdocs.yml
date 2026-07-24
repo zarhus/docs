@@ -38,6 +38,7 @@ markdown_extensions:
   - footnotes
   - pymdownx.highlight
   - pymdownx.keys
+  - pymdownx.details
   - pymdownx.superfences
   - attr_list
   - meta

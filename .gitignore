@@ -2,3 +2,5 @@ venv/
 site/
 utils/blc/blc.txt
 __pycache__/
+# Generated build output.
+docs/dyn/
