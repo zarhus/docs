@@ -10,8 +10,8 @@ Additional resources for the boards:
 
 * [`radxa/radxa-cm-projects`;](https://github.com/radxa/radxa-cm-projects/tree/main/cm3)
 * [CM3 design resources;](https://radxa.com/products/cm/cm3/#design-resources)
-* [Rockchip Wiki: partitions map;](https://opensource.rock-chips.com/wiki_Partitions)
-* [Rockchip Wiki: boot flow.](https://opensource.rock-chips.com/wiki_Boot_option#Boot_introduce)
+* [Rockchip Wiki: partitions map;](https://web.archive.org/web/20260501050119/https://opensource.rock-chips.com/wiki_Partitions)
+* [Rockchip Wiki: boot flow.](https://web.archive.org/web/20260430144601/http://opensource.rock-chips.com/wiki_Boot_option#Boot_introduce)
 
 ## Serial port access (Zarhus OS debug console)
 
