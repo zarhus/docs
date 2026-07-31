@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-next-line MD041 -->
 <p align="center">
   <img src="images/zarhus-logo-new.png" width="400" alt="Zarhus Logo" />
 </p>
@@ -52,7 +53,9 @@ Qubes OS, Kicksecure, FreeBSD, OpenWRT, Debian, and Fedora.
 real-world applicability and constant feedback.
 * Regularly reports progress through working demos and derivative products.
 
-👉 Watch the [Welcome Presentation](https://youtu.be/F3349PVOGZY?si=z1uqlaQSQe22hoV4&t=309) from Zarhus Developers Meetup 0x1.
+👉 Watch the
+[Welcome Presentation](https://youtu.be/F3349PVOGZY?si=z1uqlaQSQe22hoV4&t=309)
+from Zarhus Developers Meetup 0x1.
 
 ---
 
@@ -112,7 +115,9 @@ We also maintain our own open-source layers and tools, including:
 * [meta-trenchboot](https://github.com/3mdeb/meta-trenchboot)
 * [meta-pcengines](https://github.com/3mdeb/meta-pcengines)
 
-📍 Check out the [Zarhus public roadmap](https://github.com/zarhus/zarhus-issues/milestones) to track our progress and plans.
+📍 Check out the
+[Zarhus public roadmap](https://github.com/zarhus/zarhus-issues/milestones) to
+track our progress and plans.
 
 ---
 
