@@ -53,6 +53,8 @@ repos:
     rev: v0.15.1
     hooks:
       - id: lychee-docker
+        # Python sources embed URLs in generated HTML, not documentation links
+        exclude: \.py$
         # Optionally include additional CLI arguments
         args: [
           "--no-progress", "--exclude", "file://", "--exclude", "0.0.0.0",
