@@ -105,7 +105,8 @@ lists. To do that, paste the custom macro content in the target markdown file:
 
 where:
 
-- `FORM-ID` - target mailing list form ID that can be found [here][lm-forms].
+- `FORM-ID` - target mailing list form ID that can be found [here][lm-forms]
+  (check target list and copy `checked_value=` content from Form HTML).
 - `Button text` - text to be shown on the button.
 
-[lm-forms]: https://github.com/3mdeb/3mdeb-website/tree/main/static/subscribe
+[lm-forms]: https://listmonk.3mdeb.com/admin/lists/forms
