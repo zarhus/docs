@@ -1,6 +1,6 @@
 # About
 
-This repository contains source code for the Zarhus documentation webpage.
+This repository contains source code for the [Zarhus documentation webpage](https://docs.zarhus.com/).
 
 ## Contribution
 
