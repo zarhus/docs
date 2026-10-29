@@ -4,11 +4,11 @@
 #
 # Based on .taskfile-templates/woodpecker/lint.yml.
 #
-# The `lychee-docker` hook is skipped in the `pre-commit` step: pre-commit
-# bind-mounts the step's workspace path into the hook container, which does
-# not exist on the Docker host (Woodpecker uses a volume). The `link-check`
-# step runs the same check through `task test:check`, which uses
-# --volumes-from instead.
+# The `lychee-docker` hook runs through the mounted host Docker socket.
+# pre-commit >= 4.7.0 finds its own container via /proc/1/mountinfo (works on
+# cgroup v2) and maps the workspace path to the volume's host path, so the
+# hook container sees the checked-out files. Older versions bind-mount a path
+# that does not exist on the Docker host and lychee checks nothing.
 
 # See .taskfile-templates/README.md > Woodpecker CI wiring for why this clone:
 # block looks like this (SSH submodule URL rewrite, environment: vs settings:).
@@ -33,25 +33,16 @@ when:
 
 steps:
   - name: pre-commit
-    image: python:3.12-slim
-    environment:
-      TASK_VERSION: v3.44.0
-      SKIP: lychee-docker
-    commands:
-      # System node/npm makes pre-commit use language_version `system` for
-      # node hooks (markdownlint) instead of nodeenv, whose version parsing
-      # breaks on pre-release entries in the Node.js release index.
-      - apt-get update -qq && apt-get install -y --no-install-recommends git curl nodejs npm
-      - pip install --quiet pre-commit
-      - *install-task
-      - task lint:run
-
-  - name: link-check
     image: docker:27-cli
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       TASK_VERSION: v3.44.0
     commands:
+      # System node/npm makes pre-commit use language_version `system` for
+      # node hooks (markdownlint) instead of nodeenv, whose version parsing
+      # breaks on pre-release entries in the Node.js release index.
+      - apk add --no-cache git python3 py3-pip nodejs npm
+      - pip install --quiet --break-system-packages 'pre-commit>=4.7.0'
       - *install-task
-      - task test:check
+      - task lint:run
