@@ -1,0 +1,24 @@
+---
+version: '3'
+
+includes:
+  lint:
+    taskfile: .taskfile-templates/templates/lint/pre-commit.yml
+
+  # Mirrors the `lychee-docker` hook from .pre-commit-config.yaml. pre-commit's
+  # docker_image hooks cannot resolve the workspace path on cgroup v2 CI
+  # runners, so CI skips that hook and runs this task instead.
+  test:
+    taskfile: .taskfile-templates/templates/test/link-check.yml
+    vars:
+      LYCHEE_IMAGE: lycheeverse/lychee:0.14
+      # lychee's own default; the template's default (200,403) is narrower
+      LYCHEE_ACCEPT: '100..=103,200..=299'
+      LYCHEE_ARGS: >-
+        --no-progress --exclude file:// --exclude 0.0.0.0
+        --timeout 10 --exclude-all-private -m 10 -q
+
+tasks:
+  default:
+    cmds:
+      - task --list
