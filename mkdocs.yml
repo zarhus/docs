@@ -1,4 +1,5 @@
 ---
+INHERIT: umami.yml
 site_name: Zarhus Universe
 site_url: https://docs.zarhus.com
 
@@ -6,7 +7,7 @@ repo_url: https://github.com/zarhus/docs
 edit_uri: blob/main/docs/
 theme:
   name: material
-  # custom_dir: overrides
+  custom_dir: overrides
   favicon: images/favicon.png
   logo: images/zarhus-logo-white.png
   features:
@@ -19,9 +20,6 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
 extra:
-  analytics:
-    provider: google
-    property: TBD
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/zarhus
