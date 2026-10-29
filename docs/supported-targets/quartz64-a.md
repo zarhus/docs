@@ -10,8 +10,8 @@ Additional resources for the board:
 * [PINE64
 documentation;](https://pine64.org/documentation/Quartz64/Further_information/Schematics_and_certifications/)
 * [PINE64 Wiki](https://wiki.pine64.org/wiki/Quartz64)
-* [Rockchip Wiki: partitions map;](https://opensource.rock-chips.com/wiki_Partitions)
-* [Rockchip Wiki: boot flow.](https://opensource.rock-chips.com/wiki_Boot_option#Boot_introduce)
+* [Rockchip Wiki: partitions map;](https://web.archive.org/web/20260501050119/https://opensource.rock-chips.com/wiki_Partitions)
+* [Rockchip Wiki: boot flow.](https://web.archive.org/web/20260430144601/http://opensource.rock-chips.com/wiki_Boot_option#Boot_introduce)
 
 ## Serial port access (Zarhus OS debug console)
 
